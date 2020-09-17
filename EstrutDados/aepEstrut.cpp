@@ -113,15 +113,7 @@ void posOrdem(TN *raiz)
 	}
 }
 
-int sobeMaiorDireita(TN *aux){
-	while(aux->dir != NULL)//while até nó-folha
-	{
-		aux = aux->dir;//nó mais a direita
-	}
-	return (aux->pessoa.id);//retornar o elemento mais a direita a arvore
-}
-
-/*TN* remover(TN *raiz, char nomeRemover[30])
+TN* remover(TN *raiz, char nomeRemover[30])
 {
 	TN *atual, *anterior;
 	atual = raiz;
@@ -161,8 +153,7 @@ int sobeMaiorDireita(TN *aux){
 									aux_ante = aux_atual;
 									aux_atual = aux_atual->dir;
 								}
-								strcpy(atual->pessoa.nome, aux_atual->)
-								atual->elemento.valor = aux_atual->elemento.valor;
+								strcpy(atual->pessoa.nome, aux_atual->pessoa.nome);
 								aux_ante->dir = aux_atual->esq;
 							}
 						}
@@ -171,7 +162,7 @@ int sobeMaiorDireita(TN *aux){
 			}
 			else
 			{
-				if (atual->elemento.valor > anterior->elemento.valor)
+				if(strcmp(atual->pessoa.nome, anterior->pessoa.nome) > 0)
 				{
 					if (atual->dir == NULL)
 					{
@@ -189,7 +180,7 @@ int sobeMaiorDireita(TN *aux){
 				}
 				else
 				{
-					if (atual->elemento.valor < anterior->elemento.valor)
+					if(strcmp(atual->pessoa.nome, anterior->pessoa.nome) < 0)
 					{
 						if (atual->dir == NULL)
 						{
@@ -208,7 +199,7 @@ int sobeMaiorDireita(TN *aux){
 					{
 						if (atual->esq != NULL & atual->dir != NULL) //nó a ser excluído está na raiz e possui 2 sub-árvores
 						{
-							TNo *aux_ante, *aux_atual;
+							TN *aux_ante, *aux_atual;
 							aux_ante = atual;
 							aux_atual = atual->esq;
 							while (aux_atual->dir != NULL) //localizando o elemento mais à direita da sub-árvore esquerda
@@ -216,8 +207,8 @@ int sobeMaiorDireita(TN *aux){
 								aux_ante = aux_atual;
 								aux_atual = aux_atual->dir;
 							}
-							atual->elemento.valor = aux_atual->elemento.valor;
-							if (aux_ante == atual)
+							strcpy(atual->pessoa.nome, aux_atual->pessoa.nome);
+							if(aux_ante == atual)
 							{
 								aux_ante->esq = aux_atual->esq;
 							}
@@ -233,14 +224,14 @@ int sobeMaiorDireita(TN *aux){
 		}
 		else
 		{
-			if (auxValor < atual->elemento.valor)
+			if(strcmp(nomeRemover, atual->pessoa.nome) < 0)
 			{
 				anterior = atual;
 				atual = atual->esq;
 			}
 			else
 			{
-				if (auxValor > atual->elemento.valor)
+				if(strcmp(nomeRemover, atual->pessoa.nome) > 0)
 				{
 					anterior = atual;
 					atual = atual->dir;
@@ -252,14 +243,18 @@ int sobeMaiorDireita(TN *aux){
 	}
 	if (atual == NULL)
 	{
-		printf("\n Elemento nao foi encontrado");
+		printf("\n Usuário não encontrado");
 	}
 	else
 	{
+		printf("\n Usuário encontrado!");
+		printf("\n %s foi removido(a) com sucesso!", atual->pessoa.nome);
+		printf("\n Pressione qualquer tecla para voltar ao menu.");
+		getch();
 		free(atual);
 	}
 	return raiz;
-}*/
+}
 	
 int main(){
 	setlocale(LC_ALL, "Portuguese");
@@ -276,7 +271,7 @@ int main(){
 		printf("\n 3 - Apresentar usuários em ordem");
 		printf("\n 4 - Apresentar usuários em pos-ordem");
 		printf("\n 5 - Consultar usuário");
-		printf("\n 6 - Remover um elemento");
+		printf("\n 6 - Remover um usuário");
 		printf("\n 0 - Sair");
 		printf("\n Escolha uma das opcoes:");
 		scanf("%d", &opcao);
@@ -294,12 +289,12 @@ int main(){
 		
 			case 5:{
 				char nomeBusca[30];
-				int encontrou;
+				int usuarioEncontrado;
 				printf("\n Informe o nome do usuário a ser consultado: ");
 				fflush(stdin);
 				gets(nomeBusca);
-				encontrou = consultarRecursivo(raiz, nomeBusca);
-				if(encontrou == 1)
+				usuarioEncontrado = consultarRecursivo(raiz, nomeBusca);
+				if(usuarioEncontrado == 1)
 				{
 					printf("\n Usuário encontrado!");
 				}else
@@ -311,11 +306,12 @@ int main(){
 			case 6:
 				{
 					char nomeRemover[30];
-					printf("\n Informe o nome do usuário que você deseja excluir: ");//solicitar valor
+					printf("\n Informe o nome do usuário que você deseja excluir: ");
 					fflush(stdin);
 					gets(nomeRemover);
-					raiz = remover(raiz, nomeRemover);//chamar a funcao remover passando os parametros
+					raiz = remover(raiz, nomeRemover);
 				}
+			case 7: system("cls"); break;
 		}
 	}while(opcao != 0);
-}
+}s
