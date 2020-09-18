@@ -7,6 +7,11 @@
 typedef struct tipoPessoa{
 	int id;
 	char nome[30];
+	char sobrenome[40];
+	char dataNascimento[11];
+	char pais[30];
+	char senha[40];
+	char email[40];
 }TP;
 
 typedef struct tipoNo{
@@ -40,13 +45,29 @@ TN* inserir(TN *raiz, TP *novaPessoa)
 void lerDados(TP *novaPessoa)
 {
 
-	printf("\n Informe o id da pessoa:");
+	printf("\n Informe o id da pessoa: ");
 	fflush(stdin);
 	scanf("%d", &novaPessoa->id);
 	
-	printf("\n Informe o nome do novo usuário:");
+	printf("\n Informe o nome do novo usuário: ");
 	fflush(stdin);
 	gets(novaPessoa->nome);
+	
+	printf("\n Informe o sobrenome do novo usuário: ");
+	fflush(stdin);
+	gets(novaPessoa->sobrenome);
+	
+	printf("\n Informe a data de nascimento do novo usuário (DD/MM/AAAA): ");
+	fflush(stdin);
+	gets(novaPessoa->dataNascimento);
+	
+	printf("\n Informe o país que o novo usuário reside: ");
+	fflush(stdin);
+	gets(novaPessoa->pais);
+	
+	printf("\n Informe o email do novo usuário: ");
+	fflush(stdin);
+	gets(novaPessoa->email);
 }
 
 int consultarRecursivo(TN *auxRaiz, char nomeBusca[30])
@@ -76,9 +97,12 @@ int consultarRecursivo(TN *auxRaiz, char nomeBusca[30])
 void preOrdem(TN *raiz)
 {
 	if(raiz != NULL){
-	
+		fflush(stdin);
 		printf("\n Id: %d", raiz->pessoa.id);
-		printf("\n Nome: %s", raiz->pessoa.nome);
+		printf("\n Nome completo: %s %s", raiz->pessoa.nome, raiz->pessoa.sobrenome);
+		printf("\n Email: %s", raiz->pessoa.email);
+		printf("\n País: %s", raiz->pessoa.pais);
+		printf("\n Data de Nascimento: %s", raiz->pessoa.dataNascimento);
 		printf("\n-----------------------------\n");
 		preOrdem(raiz->esq);
 		preOrdem(raiz->dir);
@@ -92,7 +116,10 @@ void emOrdem(TN *raiz)
 		emOrdem(raiz->esq);
 
 		printf("\n Id: %d", raiz->pessoa.id);
-		printf("\n Nome: %s", raiz->pessoa.nome);
+		printf("\n Nome completo: %s %s", raiz->pessoa.nome, raiz->pessoa.sobrenome);
+		printf("\n Email: %s", raiz->pessoa.email);
+		printf("\n País: %s", raiz->pessoa.pais);
+		printf("\n Data de Nascimento: %s", raiz->pessoa.dataNascimento);
 		printf("\n-----------------------------\n");
 	
 		emOrdem(raiz->dir);
@@ -107,7 +134,10 @@ void posOrdem(TN *raiz)
 		posOrdem(raiz->dir);
 	
 		printf("\n Id: %d", raiz->pessoa.id);
-		printf("\n Nome: %s", raiz->pessoa.nome);
+		printf("\n Nome completo: %s %s", raiz->pessoa.nome, raiz->pessoa.sobrenome);
+		printf("\n Email: %s", raiz->pessoa.email);
+		printf("\n País: %s", raiz->pessoa.pais);
+		printf("\n Data de Nascimento: %s", raiz->pessoa.dataNascimento);
 		printf("\n-----------------------------\n");
 
 	}
@@ -127,7 +157,7 @@ TN* remover(TN *raiz, char nomeRemover[30])
 			{
 				if ((atual->esq == NULL) && (atual->dir == NULL)) // só um elemento na árvore
 				{
-					raiz = NULL;
+					break;
 				}
 				else
 				{
@@ -241,7 +271,7 @@ TN* remover(TN *raiz, char nomeRemover[30])
 		
 		
 	}
-	if (atual == NULL)
+	if(atual == NULL)
 	{
 		printf("\n Usuário não encontrado");
 	}
@@ -252,6 +282,7 @@ TN* remover(TN *raiz, char nomeRemover[30])
 		printf("\n Pressione qualquer tecla para voltar ao menu.");
 		getch();
 		free(atual);
+		atual = NULL;
 	}
 	return raiz;
 }
@@ -314,4 +345,5 @@ int main(){
 			case 7: system("cls"); break;
 		}
 	}while(opcao != 0);
-}s
+}
+
