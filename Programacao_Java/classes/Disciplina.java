@@ -1,3 +1,5 @@
+package classes;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +15,12 @@ public class Disciplina{
         setDescricaoDisciplina(descriçãoDisciplina);
     }
 
-    public void setNomeDisciplina(){
-        
+    private void setDescricaoDisciplina(String descriçãoDisciplina) {
+        this.descriçãoDisciplina = descriçãoDisciplina;
+    }
+
+    public void setNomeDisciplina(String nomeDisciplina) {
+        this.nomeDisciplina = nomeDisciplina;
     }
 
 

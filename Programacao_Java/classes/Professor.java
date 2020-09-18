@@ -1,11 +1,10 @@
-package ValueObjects;
-package Functions;
+package classes;
 
 import java.sql.Date;
 
-import ValueObjects.Código;
+import valueObjects.*;
 
-public class Professor{
+public class Professor {
 
     private Código codigoProfessor;
     private Nome nomeProfessor;
@@ -15,19 +14,19 @@ public class Professor{
     private Senha senhaProfessor;
     private Email emailProfessor;
 
-    public Professor(Código codigoProfessor, Nome nomeProfessor, Nome sobrenomeProfessor, Date dataNascimentoProfessor, País paísProfessor, Email emailProfessor, Senha senhaProfessor) {
+    public Professor(int codigoProfessor, String nomeProfessor, String sobrenomeProfessor, Date dataNascimentoProfessor, String paísProfessor, String emailProfessor, String senhaProfessor) {
         // gerar código ---> this.codigoProfessor = gerarCódigo();
         this.codigoProfessor = new Código(codigoProfessor);
-        this.nomeProfessor = new Nome(nome);
+        this.nomeProfessor = new Nome(nomeProfessor);
         this.sobrenomeProfessor = new Nome(sobrenomeProfessor);
-        this.dataNascimentoProfessor = new Date(dataNascimentoProfessor);
+        this.dataNascimentoProfessor = dataNascimentoProfessor;
         this.paísProfessor = new País(paísProfessor);
         this.emailProfessor = new Email(emailProfessor);
         this.senhaProfessor = new Senha(senhaProfessor);
     }
 
     public String getDadosProfessor(){
-        return "[ " + emailProfessor + " - " + nomeProfessor " - " + dataNascimentoProfessor + " - " + paísProfessor + " ]";
+        return "[ " + emailProfessor + " - " + nomeProfessor + " - " + dataNascimentoProfessor + " - " + paísProfessor + " ]";
     }    
 
 
