@@ -4,15 +4,34 @@
 #include <string.h>
 #include <locale.h>
 
+typedef struct tipoDisciplina{
+	int idDisciplina;
+	char nomeDisciplina[30];
+	char descricaoDisciplina[100];
+	struct tipoDisciplina *prox;
+}TD;
+
+typedef struct tipoListaDisciplina{
+		TD *inicio;
+		TD *fim;
+}TLD;
+
 typedef struct tipoPessoa{
 	int id;
 	char nome[30];
 	char sobrenome[40];
+	TLD *listaDisciplinas;
 	char dataNascimento[11];
 	char pais[30];
 	char senha[40];
 	char email[40];
 }TP;
+
+void inicializar(TLD *p)
+{
+	p->inicio = NULL;
+	p->fim = NULL;
+}
 
 typedef struct tipoNo{
 	TP pessoa;
@@ -39,6 +58,7 @@ TN* inserir(TN *raiz, TP *novaPessoa)
 			raiz->dir = inserir(raiz->dir, novaPessoa);
 		}
 	}
+	
 	return raiz;
 }
 
@@ -68,6 +88,9 @@ void lerDados(TP *novaPessoa)
 	printf("\n Informe o email do novo usuário: ");
 	fflush(stdin);
 	gets(novaPessoa->email);
+	
+	novaPessoa->listaDisciplinas->inicio = NULL;
+	novaPessoa->listaDisciplinas->fim = NULL;
 }
 
 int consultarRecursivo(TN *auxRaiz, char nomeBusca[30])
@@ -286,7 +309,189 @@ TN* remover(TN *raiz, char nomeRemover[30])
 	}
 	return raiz;
 }
+void inserir2(int idDisciplina, char nomeDisciplina[30], char descricaoDisciplina[20], TN *raiz)
+{
+	TLD *aux;
+	aux = raiz->pessoa.listaDisciplinas;
+	printf("\n Criação auxiliar");
+	TD *novaD;
+	novaD = (TD *) malloc(sizeof(TD));
+	printf("\n Criação nova disc");
 	
+	novaD->prox = NULL;
+	strcpy(novaD->nomeDisciplina, nomeDisciplina);
+	strcpy(novaD->descricaoDisciplina, descricaoDisciplina);
+	novaD->idDisciplina = idDisciplina;
+	
+	printf("Antes do if");
+	if(aux == NULL)
+	{
+		printf("\n Primeiro If");
+		aux->inicio = novaD;
+		aux->fim = novaD;
+	}else
+	{
+		printf("\n Else");
+		aux->fim->prox = novaD;
+		aux->fim = novaD;
+	}
+	raiz->pessoa.listaDisciplinas = aux;
+}
+void inserirDisciplina(TN *raiz)
+{
+	int opcao2;
+	do{
+		
+		printf("\n 1 - Matemática");
+		printf("\n 2 - Física");
+		printf("\n 3 - Química");
+		printf("\n 0 - Sair");
+		printf("\n Escolha uma opção: ");
+		scanf("%d", &opcao2);
+		switch(opcao2){
+			case 1:{
+				inserir2(1,"Matemática","Teste", raiz);
+				break;
+			}
+			case 2:{
+				inserir2(2,"Física","Descrição Física", raiz);
+				break;
+			}
+			case 3:{
+				inserir2(3,"Química","Descrição Química", raiz);
+				break;
+			}
+		}
+		system("cls");
+	}while(opcao2 != 0);
+}
+void apresentar(TN *raiz)
+{
+	TLD *p;
+	p = raiz->pessoa.listaDisciplinas;
+	if(p->inicio == NULL)
+	{
+		printf("\n A lista de disciplinas desse usuário está vazia!");
+	}else
+	{
+		TD *aux;
+		aux = p->inicio;
+		while(aux != NULL)
+		{	
+			printf("\n Id: %d - %s", aux->idDisciplina, aux->nomeDisciplina);
+			printf("\n Descrição: %s", aux->descricaoDisciplina);
+			printf("\n ----------------------");
+			aux = aux->prox;
+		}
+	}
+}
+
+void remover(TN *raiz)
+{
+	TLD *p;
+	p = raiz->pessoa.listaDisciplinas;
+	
+	TD *aux, *anterior;
+	aux = p->inicio;
+	anterior = p->inicio;
+	if(p->inicio == NULL)
+	{
+		printf("\n A lista de disciplinas desse usuário está vazia!");
+	}else
+	{
+		int valor;
+		apresentar(raiz);
+		printf("\n Escolha o id da disciplina que deseja excluir: ");
+		scanf("%d", &valor);
+		while(aux != NULL)
+		{
+			if(aux->idDisciplina == valor){
+				if(aux->prox == NULL && aux == p->inicio)
+				{
+					free(aux);
+					p->inicio = NULL;
+					break;
+				}
+				else if(aux == p->inicio)
+				{
+					p->inicio = aux->prox;
+					free(aux);
+					break;
+				}else if(aux == p->fim)
+				{
+					p->fim = anterior;
+					anterior->prox = NULL;
+					free(aux);
+					break;
+				}else
+				{
+					anterior->prox = aux->prox;
+					free(aux);
+					break;
+				}
+					printf("\n Disciplina excluída!\n");
+			}else
+			{
+				anterior = aux;
+				aux = aux->prox;
+			}
+		}
+
+	}
+}
+
+void menuListaDisciplina(TN *raiz)
+{
+	int opcao1;
+	do{
+		
+		printf("\n 1 - Adicionar disciplina no usuário.");
+		printf("\n 2 - Visualizar disciplinas do usuário");
+		printf("\n 3 - Remover disciplinas do usuário");
+		printf("\n 0 - Sair");
+		printf("\n Escolha uma opção: ");
+		scanf("%d", &opcao1);
+		switch(opcao1){
+			case 1:{
+				inserirDisciplina(raiz);
+				break;
+			}
+			case 2:{
+				apresentar(raiz);
+				break;
+			}
+			case 3:{
+				remover(raiz);
+				break;
+			}
+		}
+	}while(opcao1 != 0);
+}
+int alterarDisciplinas(TN *raiz, int idPesquisado)
+{
+	if(raiz == NULL)
+	{
+		return 0;
+	}else
+	{
+		if(raiz->pessoa.id == idPesquisado)
+		{
+			
+			menuListaDisciplina(raiz);
+			return 1;
+		}else
+		{
+			if(raiz->pessoa.id > idPesquisado)
+			{
+				return alterarDisciplinas(raiz->esq, idPesquisado);
+			}else
+			{
+				return alterarDisciplinas(raiz->dir, idPesquisado);
+			}
+		}
+	}
+}
+
 int main(){
 	setlocale(LC_ALL, "Portuguese");
 	TN *raiz;
@@ -301,8 +506,9 @@ int main(){
 		printf("\n 2 - Apresentar usuários em pre-ordem");
 		printf("\n 3 - Apresentar usuários em ordem");
 		printf("\n 4 - Apresentar usuários em pos-ordem");
-		printf("\n 5 - Consultar usuário");
-		printf("\n 6 - Remover um usuário");
+		printf("\n 5 - Visualizar/editar lista disciplinas do professor.");
+		printf("\n 6 - Consultar usuário");
+		printf("\n 7 - Remover um usuário");
 		printf("\n 0 - Sair");
 		printf("\n Escolha uma das opcoes:");
 		scanf("%d", &opcao);
@@ -344,8 +550,22 @@ int main(){
 				}
 				break;
 			}
-		
 			case 5:{
+				int idPesquisa, encontrado;
+				system("cls");
+				printf("Indique o id do usuário: ");
+				fflush(stdin);
+				scanf("%d", &idPesquisa);
+				encontrado = alterarDisciplinas(raiz, idPesquisa);
+				if(encontrado == 1){
+					printf("\n Lista de disciplinas atualizada com sucesso");
+				}else
+				{
+					printf("\n Id de usuário não encontrado\n\n");
+				}
+				break;
+			}
+			case 6:{
 				char nomeBusca[30];
 				int usuarioEncontrado;
 				printf("\n Informe o nome do usuário a ser consultado: ");
@@ -361,7 +581,7 @@ int main(){
 				}
 				break;
 			}
-			case 6:
+			case 7:
 				{
 					char nomeRemover[30];
 					printf("\n Informe o nome do usuário que você deseja excluir: ");
@@ -369,7 +589,7 @@ int main(){
 					gets(nomeRemover);
 					raiz = remover(raiz, nomeRemover);
 				}
-			case 7: system("cls"); break;
+			case 8: system("cls"); break;
 		}
 	}while(opcao != 0);
 }
