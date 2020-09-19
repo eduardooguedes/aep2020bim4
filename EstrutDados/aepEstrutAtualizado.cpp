@@ -139,7 +139,6 @@ void posOrdem(TN *raiz)
 		printf("\n País: %s", raiz->pessoa.pais);
 		printf("\n Data de Nascimento: %s", raiz->pessoa.dataNascimento);
 		printf("\n-----------------------------\n");
-
 	}
 }
 
@@ -157,6 +156,7 @@ TN* remover(TN *raiz, char nomeRemover[30])
 			{
 				if ((atual->esq == NULL) && (atual->dir == NULL)) // só um elemento na árvore
 				{
+					raiz = NULL;
 					break;
 				}
 				else
@@ -314,9 +314,36 @@ int main(){
 				raiz = inserir(raiz, &pessoa);
 				break;
 			}
-			case 2:	preOrdem(raiz); break;
-			case 3: emOrdem(raiz); break;
-			case 4: posOrdem(raiz); break;
+			case 2:{
+				if(raiz == NULL)
+				{
+					printf("\n A lista de usuários está vazia!");
+				}else
+				{
+					preOrdem(raiz);
+				}
+				break;
+			}
+			case 3:{
+				if(raiz == NULL)
+				{
+					printf("\n A lista de usuários está vazia!");
+				}else
+				{
+					emOrdem(raiz);
+				}
+				break;
+			}
+			case 4:{
+				if(raiz == NULL)
+				{
+					printf("\n A lista de usuários está vazia!");
+				}else
+				{
+					posOrdem(raiz);
+				}
+				break;
+			}
 		
 			case 5:{
 				char nomeBusca[30];
