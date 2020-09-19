@@ -9,10 +9,4 @@ public class Código {
         //this.código = gerarCódigo();
     }
 
-    // EM ANDAMENTO
-    // public int gerarCódigo(){ 
-    // }
-    
-
-
 }

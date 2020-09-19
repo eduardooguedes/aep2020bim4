@@ -1,26 +1,26 @@
 package classes;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
-
-import javax.xml.crypto.Data;
 
 import valueObjects.*;
 
 public class Professor {
 
-    private Código codigoProfessor;
+    private Código códigoProfessor;
     private Nome nomeProfessor;
-    private Nome sobrenomeProfessor;
     private Date dataNascimentoProfessor;
     private País paísProfessor;
     private Senha senhaProfessor;
     private Email emailProfessor;
 
-    public Professor(int codigoProfessor, String nomeProfessor, String sobrenomeProfessor, Date dataNascimentoProfessor, País paísProfessor, String emailProfessor, String senhaProfessor) {
-        // gerar código ---> this.codigoProfessor = gerarCódigo();
-        this.codigoProfessor = new Código(codigoProfessor);
-        this.nomeProfessor = new Nome(nomeProfessor);
-        this.sobrenomeProfessor = new Nome(sobrenomeProfessor);
+    List<Disciplina> listaDisciplinaProfessor = new ArrayList<Disciplina>();
+
+    public Professor(int códigoProfessor, String nomeProfessor, String sobrenomeProfessor, Date dataNascimentoProfessor, País paísProfessor, String emailProfessor, String senhaProfessor) {
+        // gerar código ---> this.códigoProfessor = gerarCódigo();
+        this.códigoProfessor = new Código(códigoProfessor);
+        this.nomeProfessor = new Nome(nomeProfessor, sobrenomeProfessor);
         this.dataNascimentoProfessor = dataNascimentoProfessor;
         this.paísProfessor = paísProfessor;
         this.emailProfessor = new Email(emailProfessor);
@@ -28,8 +28,20 @@ public class Professor {
     }
 
     public String getDadosProfessor(){
-        return "[ " + emailProfessor.getEmail() + " - " + nomeProfessor.getNome() + " - " + dataNascimentoProfessor.getDate() + '/' + dataNascimentoProfessor.getMonth() + '/' + dataNascimentoProfessor.getYear() + " - " + paísProfessor.getNomePaís() + " ]";
+        return "[ " + emailProfessor.getEmail() + " - " + nomeProfessor.getNomeCompleto() + " - " + dataNascimentoProfessor.getDate() + '/' + dataNascimentoProfessor.getMonth() + '/' + dataNascimentoProfessor.getYear() + " - " + paísProfessor.getNomePaís() + " ]";
     }    
 
+    public void setDisciplinaProfessor(Disciplina disciplina){
+        listaDisciplinaProfessor.add(disciplina);
+    }
 
+    public String getQuantidadeDisciplinas(){
+        return "O professor " + nomeProfessor.getNome() + ", leciona atualmente " + listaDisciplinaProfessor.size() + " disciplinas.";
+    }
+
+    public void getDisciplinasLecionadas(){
+        for(Disciplina disciplina : listaDisciplinaProfessor){
+            System.out.println(disciplina.getNomeDisciplina());
+        }
+    }
 }

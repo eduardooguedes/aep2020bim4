@@ -268,4 +268,11 @@ public enum País {
         return this.nomePaís;
     }
 
+    public String getTrêsDigitos(){
+        return this.codigoTrêsDigitos;
+    }
+
+    public String getDoisDigitos(){
+        return this.codigoDoisDigitos;
+    }
 }
