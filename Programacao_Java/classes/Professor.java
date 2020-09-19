@@ -1,6 +1,8 @@
 package classes;
 
-import java.sql.Date;
+import java.util.Date;
+
+import javax.xml.crypto.Data;
 
 import valueObjects.*;
 
@@ -14,19 +16,19 @@ public class Professor {
     private Senha senhaProfessor;
     private Email emailProfessor;
 
-    public Professor(int codigoProfessor, String nomeProfessor, String sobrenomeProfessor, Date dataNascimentoProfessor, String paísProfessor, String emailProfessor, String senhaProfessor) {
+    public Professor(int codigoProfessor, String nomeProfessor, String sobrenomeProfessor, Date dataNascimentoProfessor, País paísProfessor, String emailProfessor, String senhaProfessor) {
         // gerar código ---> this.codigoProfessor = gerarCódigo();
         this.codigoProfessor = new Código(codigoProfessor);
         this.nomeProfessor = new Nome(nomeProfessor);
         this.sobrenomeProfessor = new Nome(sobrenomeProfessor);
         this.dataNascimentoProfessor = dataNascimentoProfessor;
-        this.paísProfessor = new País(paísProfessor);
+        this.paísProfessor = paísProfessor;
         this.emailProfessor = new Email(emailProfessor);
         this.senhaProfessor = new Senha(senhaProfessor);
     }
 
     public String getDadosProfessor(){
-        return "[ " + emailProfessor + " - " + nomeProfessor + " - " + dataNascimentoProfessor + " - " + paísProfessor + " ]";
+        return "[ " + emailProfessor.getEmail() + " - " + nomeProfessor.getNome() + " - " + dataNascimentoProfessor.getDate() + '/' + dataNascimentoProfessor.getMonth() + '/' + dataNascimentoProfessor.getYear() + " - " + paísProfessor.getNomePaís() + " ]";
     }    
 
 
