@@ -329,7 +329,7 @@ void inserir2(int idDisciplina, char nomeDisciplina[30], char descricaoDisciplin
 		aux->fim->prox = novaD;
 		aux->fim = novaD;
 	}
-	raiz->pessoa.listaDisciplinas = aux;
+	
 }
 
 bool consultarDisciplina(TLD *p, int id)
@@ -361,7 +361,7 @@ void inserirDisciplina(TN *raiz)
 			case 1:{
 				if(!consultarDisciplina(raiz->pessoa.listaDisciplinas, 1)){
 					printf("\n Essa matéria já está inserida na lista.");
-					printf("\n Pressione qualquer tecla");
+					printf("\n Pressione qualquer tecla.");
 					getch();
 					break;
 				}
@@ -371,7 +371,7 @@ void inserirDisciplina(TN *raiz)
 			case 2:{
 				if(!consultarDisciplina(raiz->pessoa.listaDisciplinas, 2)){
 					printf("\n Essa matéria já está inserida na lista.");
-					printf("\n Pressione qualquer tecla");
+					printf("\n Pressione qualquer tecla.");
 					getch();
 					break;
 				}
@@ -381,7 +381,7 @@ void inserirDisciplina(TN *raiz)
 			case 3:{
 				if(!consultarDisciplina(raiz->pessoa.listaDisciplinas, 3)){
 					printf("\n Essa matéria já está inserida na lista.");
-					printf("\n Pressione qualquer tecla");
+					printf("\n Pressione qualquer tecla.");
 					getch();
 					break;
 				}
@@ -524,7 +524,7 @@ int alterarDisciplinas(TN *raiz, int idPesquisado)
 int main(){
 	setlocale(LC_ALL, "Portuguese");
 	TN *raiz;
-	raiz = NULL;//inicializar arvore
+	raiz = NULL;
 	
 	TP pessoa;
 	
@@ -582,19 +582,21 @@ int main(){
 				break;
 			}
 			case 5:{
-				int idPesquisa, encontrado;
+				int idPesquisa = 0, encontrado;
 				system("cls");
 				printf("Indique o id do usuário: ");
 				fflush(stdin);
 				scanf("%d", &idPesquisa);
-				printf("%d", idPesquisa);
-				getch();
 				encontrado = alterarDisciplinas(raiz, idPesquisa);
 				if(encontrado == 1){
-					printf("\n Lista de disciplinas atualizada com sucesso");
+					printf("\n Lista de disciplinas atualizada com sucesso.");
+					getch();
+					system("cls");
 				}else
 				{
 					printf("\n Id de usuário não encontrado\n\n");
+					getch();
+					system("cls");
 				}
 				break;
 			}
