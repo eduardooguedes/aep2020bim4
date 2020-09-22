@@ -40,6 +40,9 @@ typedef struct tipoNo{
 
 TN* inserir(TN *raiz, TP *novaPessoa)
 {
+	TLD *aux;
+	aux = novaPessoa->listaDisciplinas;
+	inicializar(aux);
 	if(raiz == NULL)
 	{
 		raiz = new TN;
@@ -58,16 +61,13 @@ TN* inserir(TN *raiz, TP *novaPessoa)
 			raiz->dir = inserir(raiz->dir, novaPessoa);
 		}
 	}
-	
 	return raiz;
 }
 
-void lerDados(TP *novaPessoa)
+void lerDados(TP *novaPessoa, int idPessoa)
 {
 
-	printf("\n Informe o id da pessoa: ");
-	fflush(stdin);
-	scanf("%d", &novaPessoa->id);
+	novaPessoa->id = idPessoa;
 	
 	printf("\n Informe o nome do novo usuário: ");
 	fflush(stdin);
@@ -89,8 +89,6 @@ void lerDados(TP *novaPessoa)
 	fflush(stdin);
 	gets(novaPessoa->email);
 	
-	novaPessoa->listaDisciplinas->inicio = NULL;
-	novaPessoa->listaDisciplinas->fim = NULL;
 }
 
 int consultarRecursivo(TN *auxRaiz, char nomeBusca[30])
@@ -292,7 +290,6 @@ TN* remover(TN *raiz, char nomeRemover[30])
 			}
 		}
 		
-		
 	}
 	if(atual == NULL)
 	{
@@ -313,29 +310,41 @@ void inserir2(int idDisciplina, char nomeDisciplina[30], char descricaoDisciplin
 {
 	TLD *aux;
 	aux = raiz->pessoa.listaDisciplinas;
-	printf("\n Criação auxiliar");
+	
 	TD *novaD;
 	novaD = (TD *) malloc(sizeof(TD));
-	printf("\n Criação nova disc");
+	
 	
 	novaD->prox = NULL;
 	strcpy(novaD->nomeDisciplina, nomeDisciplina);
 	strcpy(novaD->descricaoDisciplina, descricaoDisciplina);
 	novaD->idDisciplina = idDisciplina;
 	
-	printf("Antes do if");
-	if(aux == NULL)
+	if(aux->inicio == NULL)
 	{
-		printf("\n Primeiro If");
 		aux->inicio = novaD;
 		aux->fim = novaD;
 	}else
 	{
-		printf("\n Else");
 		aux->fim->prox = novaD;
 		aux->fim = novaD;
 	}
 	raiz->pessoa.listaDisciplinas = aux;
+}
+
+bool consultarDisciplina(TLD *p, int id)
+{
+	TD *aux;
+	aux = p->inicio;
+	while(aux != NULL)
+	{
+		if(aux->idDisciplina == id){
+			return false;
+		}else{
+			aux = aux->prox;
+		}
+	}
+	return true;
 }
 void inserirDisciplina(TN *raiz)
 {
@@ -350,15 +359,33 @@ void inserirDisciplina(TN *raiz)
 		scanf("%d", &opcao2);
 		switch(opcao2){
 			case 1:{
-				inserir2(1,"Matemática","Teste", raiz);
+				if(!consultarDisciplina(raiz->pessoa.listaDisciplinas, 1)){
+					printf("\n Essa matéria já está inserida na lista.");
+					printf("\n Pressione qualquer tecla");
+					getch();
+					break;
+				}
+				inserir2(1,(char*)"Matemática",(char*)"Teste", raiz);
 				break;
 			}
 			case 2:{
-				inserir2(2,"Física","Descrição Física", raiz);
+				if(!consultarDisciplina(raiz->pessoa.listaDisciplinas, 2)){
+					printf("\n Essa matéria já está inserida na lista.");
+					printf("\n Pressione qualquer tecla");
+					getch();
+					break;
+				}
+				inserir2(2,(char*)"Fisica",(char*)"Teste Descrição Fis", raiz);
 				break;
 			}
 			case 3:{
-				inserir2(3,"Química","Descrição Química", raiz);
+				if(!consultarDisciplina(raiz->pessoa.listaDisciplinas, 3)){
+					printf("\n Essa matéria já está inserida na lista.");
+					printf("\n Pressione qualquer tecla");
+					getch();
+					break;
+				}
+				inserir2(3,(char*)"Quimica",(char*)"Teste Descrição Qui", raiz);
 				break;
 			}
 		}
@@ -374,10 +401,12 @@ void apresentar(TN *raiz)
 		printf("\n A lista de disciplinas desse usuário está vazia!");
 	}else
 	{
+		printf("\n Usuario: %s", raiz->pessoa.nome);
 		TD *aux;
 		aux = p->inicio;
 		while(aux != NULL)
 		{	
+			
 			printf("\n Id: %d - %s", aux->idDisciplina, aux->nomeDisciplina);
 			printf("\n Descrição: %s", aux->descricaoDisciplina);
 			printf("\n ----------------------");
@@ -500,6 +529,7 @@ int main(){
 	TP pessoa;
 	
 	int opcao;
+	int id = 1;
 	
 	do{
 		printf("\n 1 - Inserir novo usuário");
@@ -516,8 +546,9 @@ int main(){
 		{
 			case 1: 
 			{
-				lerDados(&pessoa);
+				lerDados(&pessoa, id);
 				raiz = inserir(raiz, &pessoa);
+				id++;
 				break;
 			}
 			case 2:{
@@ -556,6 +587,8 @@ int main(){
 				printf("Indique o id do usuário: ");
 				fflush(stdin);
 				scanf("%d", &idPesquisa);
+				printf("%d", idPesquisa);
+				getch();
 				encontrado = alterarDisciplinas(raiz, idPesquisa);
 				if(encontrado == 1){
 					printf("\n Lista de disciplinas atualizada com sucesso");
