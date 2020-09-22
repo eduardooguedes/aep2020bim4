@@ -5,25 +5,30 @@ import java.util.List;
 
 public class Disciplina{
     
+    private int códigoDisciplina;
     private String nomeDisciplina;
-    private AreaDisciplina areaDisciplina;
     private String descriçãoDisciplina;
     
-    public Disciplina(String nomeDisciplina, AreaDisciplina areaDisciplina, String descriçãoDisciplina){
-        setNomeDisciplina(nomeDisciplina);
-        this.areaDisciplina = areaDisciplina;
+    public Disciplina(int códigoDisciplina, String nomeDisciplina, String descriçãoDisciplina){
+        this.códigoDisciplina = códigoDisciplina;
+        this.nomeDisciplina = nomeDisciplina;
         setDescricaoDisciplina(descriçãoDisciplina);
     }
 
     private void setDescricaoDisciplina(String descriçãoDisciplina) {
+        if(descriçãoDisciplina.length() < 10){
+            throw new RuntimeException("Descrição muito pequena.");
+        }
+
         this.descriçãoDisciplina = descriçãoDisciplina;
     }
 
-    public void setNomeDisciplina(String nomeDisciplina) {
-        this.nomeDisciplina = nomeDisciplina;
+    public String getNomeDisciplina(){
+        return nomeDisciplina;
     }
 
-
-
+    public String getDescriçãoDisciplina(){
+        return descriçãoDisciplina;
+    }
 
 }

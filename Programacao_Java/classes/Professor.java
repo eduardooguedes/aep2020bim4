@@ -1,33 +1,47 @@
 package classes;
 
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Date;
 
 import valueObjects.*;
 
 public class Professor {
 
-    private Código codigoProfessor;
+    private Código códigoProfessor;
     private Nome nomeProfessor;
-    private Nome sobrenomeProfessor;
     private Date dataNascimentoProfessor;
     private País paísProfessor;
     private Senha senhaProfessor;
     private Email emailProfessor;
 
-    public Professor(int codigoProfessor, String nomeProfessor, String sobrenomeProfessor, Date dataNascimentoProfessor, String paísProfessor, String emailProfessor, String senhaProfessor) {
-        // gerar código ---> this.codigoProfessor = gerarCódigo();
-        this.codigoProfessor = new Código(codigoProfessor);
-        this.nomeProfessor = new Nome(nomeProfessor);
-        this.sobrenomeProfessor = new Nome(sobrenomeProfessor);
+    List<Disciplina> listaDisciplinaProfessor = new ArrayList<Disciplina>();
+
+    public Professor(int códigoProfessor, String nomeProfessor, String sobrenomeProfessor, Date dataNascimentoProfessor, País paísProfessor, String emailProfessor, String senhaProfessor) {
+        // gerar código ---> this.códigoProfessor = gerarCódigo();
+        this.códigoProfessor = new Código(códigoProfessor);
+        this.nomeProfessor = new Nome(nomeProfessor, sobrenomeProfessor);
         this.dataNascimentoProfessor = dataNascimentoProfessor;
-        this.paísProfessor = new País(paísProfessor);
+        this.paísProfessor = paísProfessor;
         this.emailProfessor = new Email(emailProfessor);
         this.senhaProfessor = new Senha(senhaProfessor);
     }
 
     public String getDadosProfessor(){
-        return "[ " + emailProfessor + " - " + nomeProfessor + " - " + dataNascimentoProfessor + " - " + paísProfessor + " ]";
+        return "[ " + emailProfessor.getEmail() + " - " + nomeProfessor.getNomeCompleto() + " - " + dataNascimentoProfessor.getDate() + '/' + dataNascimentoProfessor.getMonth() + '/' + dataNascimentoProfessor.getYear() + " - " + paísProfessor.getNomePaís() + " ]";
     }    
 
+    public void setDisciplinaProfessor(Disciplina disciplina){
+        listaDisciplinaProfessor.add(disciplina);
+    }
 
+    public String getQuantidadeDisciplinas(){
+        return "O professor " + nomeProfessor.getNome() + ", leciona atualmente " + listaDisciplinaProfessor.size() + " disciplinas.";
+    }
+
+    public void getDisciplinasLecionadas(){
+        for(Disciplina disciplina : listaDisciplinaProfessor){
+            System.out.println(disciplina.getNomeDisciplina());
+        }
+    }
 }
