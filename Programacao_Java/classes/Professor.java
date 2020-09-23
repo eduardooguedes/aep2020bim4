@@ -1,5 +1,7 @@
 package classes;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -17,7 +19,7 @@ public class Professor {
 
     List<Disciplina> listaDisciplinaProfessor = new ArrayList<Disciplina>();
 
-    public Professor(int códigoProfessor, String nomeProfessor, String sobrenomeProfessor, Date dataNascimentoProfessor, País paísProfessor, String emailProfessor, String senhaProfessor) {
+    public Professor(int códigoProfessor, String nomeProfessor, String sobrenomeProfessor, Date dataNascimentoProfessor, País paísProfessor, String emailProfessor, String senhaProfessor) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         // gerar código ---> this.códigoProfessor = gerarCódigo();
         this.códigoProfessor = new Código(códigoProfessor);
         this.nomeProfessor = new Nome(nomeProfessor, sobrenomeProfessor);
@@ -27,6 +29,9 @@ public class Professor {
         this.senhaProfessor = new Senha(senhaProfessor);
     }
 
+    public Senha getSenha(){
+        return this.senhaProfessor;
+    }
     public String getDadosProfessor(){
         return "[ " + emailProfessor.getEmail() + " - " + nomeProfessor.getNomeCompleto() + " - " + dataNascimentoProfessor.getDate() + '/' + dataNascimentoProfessor.getMonth() + '/' + dataNascimentoProfessor.getYear() + " - " + paísProfessor.getNomePaís() + " ]";
     }    

@@ -20,7 +20,7 @@ typedef struct tipoPessoa{
 	int id;
 	char nome[30];
 	char sobrenome[40];
-	TLD *listaDisciplinas;
+	TLD listaDisciplinas;
 	char dataNascimento[11];
 	char pais[30];
 	char senha[40];
@@ -40,9 +40,6 @@ typedef struct tipoNo{
 
 TN* inserir(TN *raiz, TP *novaPessoa)
 {
-	TLD *aux;
-	aux = novaPessoa->listaDisciplinas;
-	inicializar(aux);
 	if(raiz == NULL)
 	{
 		raiz = new TN;
@@ -308,7 +305,7 @@ TN* remover(TN *raiz, char nomeRemover[30])
 }
 void inserir2(int idDisciplina, char nomeDisciplina[30], char descricaoDisciplina[20], TN *raiz)
 {
-	TLD *aux;
+	TLD aux;
 	aux = raiz->pessoa.listaDisciplinas;
 	
 	TD *novaD;
@@ -504,8 +501,7 @@ int alterarDisciplinas(TN *raiz, int idPesquisado)
 	}else
 	{
 		if(raiz->pessoa.id == idPesquisado)
-		{
-			
+		{		
 			menuListaDisciplina(raiz);
 			return 1;
 		}else
@@ -547,6 +543,8 @@ int main(){
 			case 1: 
 			{
 				lerDados(&pessoa, id);
+				pessoa.listaDisciplinas->inicio = NULL;
+				pessoa.listaDisciplinas->fim = NULL;
 				raiz = inserir(raiz, &pessoa);
 				id++;
 				break;
