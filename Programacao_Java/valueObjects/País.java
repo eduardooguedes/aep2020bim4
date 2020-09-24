@@ -275,4 +275,7 @@ public enum País {
     public String getDoisDigitos(){
         return this.codigoDoisDigitos;
     }
+
+    //
+
 }

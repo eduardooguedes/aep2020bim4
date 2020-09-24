@@ -2,11 +2,12 @@ package valueObjects;
 
 public class Código {
     
-    private int código;
+    private int códigoCadastro;
+    private String tipoCódigo;
 
-    public Código(int código){
-        this.código = código; 
-        //this.código = gerarCódigo();
+    public Código(int códigoCadastro, String tipoCódigo){
+        this.códigoCadastro = códigoCadastro;
+        this.tipoCódigo = tipoCódigo;
     }
 
 }

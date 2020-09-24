@@ -18,6 +18,7 @@ public class Professor {
     private Email emailProfessor;
 
     List<Disciplina> listaDisciplinaProfessor = new ArrayList<Disciplina>();
+    
 
     public Professor(int códigoProfessor, String nomeProfessor, String sobrenomeProfessor, Date dataNascimentoProfessor, País paísProfessor, String emailProfessor, String senhaProfessor) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         // gerar código ---> this.códigoProfessor = gerarCódigo();
