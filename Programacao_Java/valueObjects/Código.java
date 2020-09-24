@@ -1,5 +1,6 @@
 package valueObjects;
 
+
 public class Código {
     
     private int códigoCadastro;
@@ -9,5 +10,6 @@ public class Código {
         this.códigoCadastro = códigoCadastro;
         this.tipoCódigo = tipoCódigo;
     }
+    --
 
 }

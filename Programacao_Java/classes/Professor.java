@@ -22,7 +22,7 @@ public class Professor {
 
     public Professor(int códigoProfessor, String nomeProfessor, String sobrenomeProfessor, Date dataNascimentoProfessor, País paísProfessor, String emailProfessor, String senhaProfessor) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         // gerar código ---> this.códigoProfessor = gerarCódigo();
-        this.códigoProfessor = new Código(códigoProfessor);
+        this.códigoProfessor = new Código(códigoProfessor, "Professor");
         this.nomeProfessor = new Nome(nomeProfessor, sobrenomeProfessor);
         this.dataNascimentoProfessor = dataNascimentoProfessor;
         this.paísProfessor = paísProfessor;

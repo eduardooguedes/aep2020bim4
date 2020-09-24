@@ -18,7 +18,6 @@ public class Postagem {
         this.dataPostagem = dataAtual;
     }
 
-    s
 
 
 }
