@@ -2,11 +2,11 @@ package classes;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
+import java.util.HashSet;
 
 import valueObjects.*;
+import classes.Postagem;
 
 public class Professor {
 
@@ -16,12 +16,15 @@ public class Professor {
     private País paísProfessor;
     private Senha senhaProfessor;
     private Email emailProfessor;
+    private Disciplina disciplinaPrincipal;
 
-    List<Disciplina> listaDisciplinaProfessor = new ArrayList<Disciplina>();
+    HashSet<Disciplina> listaDisciplinaProfessor = new HashSet<Disciplina>();    
+    HashSet<Chat> chatProfessor = new HashSet<Chat>();
+    HashSet<Postagem> postagensProfessor = new HashSet<Postagem>();
 
     public Professor(int códigoProfessor, String nomeProfessor, String sobrenomeProfessor, Date dataNascimentoProfessor, País paísProfessor, String emailProfessor, String senhaProfessor) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         // gerar código ---> this.códigoProfessor = gerarCódigo();
-        this.códigoProfessor = new Código(códigoProfessor);
+        this.códigoProfessor = new Código(códigoProfessor, "Professor");
         this.nomeProfessor = new Nome(nomeProfessor, sobrenomeProfessor);
         this.dataNascimentoProfessor = dataNascimentoProfessor;
         this.paísProfessor = paísProfessor;
@@ -49,4 +52,21 @@ public class Professor {
             System.out.println(disciplina.getNomeDisciplina());
         }
     }
+
+    public void criarChat(Professor professor){
+        Chat chat = new Chat("Professor-Professor", 4);
+        chatProfessor.add(chat);
+    }
+
+    public void criarPostagem(){
+        Postagem postagem = new Postagem(6, "Tudo pronto", ":D", this.disciplinaPrincipal);
+        postagensProfessor.add(postagem);
+    }
+
+    public void criarPostagemDisciplinas(){
+        //dados inseridos manualmente para simular inserção do usuário
+        Postagem postagem = new Postagem(5, "AEP 2020", "Equipe EFI", listaDisciplinaProfessor);
+        postagensProfessor.add(postagem);
+    }
+
 }

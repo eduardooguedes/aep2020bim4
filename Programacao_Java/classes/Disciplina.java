@@ -9,6 +9,8 @@ public class Disciplina{
     private String nomeDisciplina;
     private String descriçãoDisciplina;
     
+    private Chat chatDisciplina = new Chat("Disciplina", 2);
+
     public Disciplina(int códigoDisciplina, String nomeDisciplina, String descriçãoDisciplina){
         this.códigoDisciplina = códigoDisciplina;
         this.nomeDisciplina = nomeDisciplina;
