@@ -1,8 +1,8 @@
 package classes;
 
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+//import java.sql.Time;
+//import java.time.LocalDate;
+//import java.time.LocalDateTime;
 
 public class Mensagem {
     
@@ -15,7 +15,5 @@ public class Mensagem {
         this.mensagem = mensagem;
         //this.horaMensagem = new LocalDateTime.now();
     }
-    
-    
-
+  
 }
