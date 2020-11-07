@@ -8,17 +8,17 @@ import valueObjects.*;
 public class Postagem {
     
     private Código códigoPostagem;
-    private String títuloPostagem;
-    private String conteúdoPostagem;
+    private String título;
+    private String conteúdo;
     private Date dataPostagem;  
     private Disciplina disciplinaPrincipal;
 
     HashSet<Disciplina> listaDisciplinas = new HashSet<Disciplina>();
 
-    public Postagem(int códigoPostagem, String títuloPostagem, String conteúdoPostagem, HashSet<Disciplina> listaDisciplinaProfessor){
-        this.códigoPostagem = new Código(códigoPostagem, "Postagem");
-        this.títuloPostagem = títuloPostagem;
-        this.conteúdoPostagem = conteúdoPostagem;
+    public Postagem(String títuloPostagem, String conteúdoPostagem, HashSet<Disciplina> listaDisciplinaProfessor){
+        this.códigoPostagem = new Código("Postagem");
+        this.título = títuloPostagem;
+        this.conteúdo = conteúdoPostagem;
         //this.dataPostagem = dataAtual;
         this.disciplinaPrincipal = null;
         for(Disciplina disciplina : listaDisciplinaProfessor){
@@ -26,19 +26,19 @@ public class Postagem {
         }
     }
 
-    public Postagem(int códigoPostagem, String títuloPostagem, String conteúdoPostagem, Disciplina disciplina){
+    public Postagem(String títuloPostagem, String conteúdoPostagem, Disciplina disciplina){
         this.disciplinaPrincipal = disciplina;
-        this.códigoPostagem = new Código(códigoPostagem, "Postagem");
-        this.títuloPostagem = títuloPostagem;
-        this.conteúdoPostagem = conteúdoPostagem;
+        this.códigoPostagem = new Código("Postagem");
+        this.título = títuloPostagem;
+        this.conteúdo = conteúdoPostagem;
         //this.dataPostagem = dataAtual;
     }
 
-    public Postagem(int códigoPostagem, String títuloPostagem, String conteúdoPostagem){
+    public Postagem(String títuloPostagem, String conteúdoPostagem){
         this.disciplinaPrincipal = null;
-        this.códigoPostagem = new Código(códigoPostagem, "Postagem");
-        this.títuloPostagem = títuloPostagem;
-        this.conteúdoPostagem = conteúdoPostagem;
+        this.códigoPostagem = new Código("Postagem");
+        this.título = títuloPostagem;
+        this.conteúdo = conteúdoPostagem;
         //this.dataPostagem = dataAtual;
     }
 

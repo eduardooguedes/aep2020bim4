@@ -1,15 +1,16 @@
 package valueObjects;
 
+import java.util.UUID;
 
 public class Código {
     
-    private int códigoCadastro;
+    private String códigoCadastro;
     private String tipoCódigo;
 
-    public Código(int códigoCadastro, String tipoCódigo){
-        this.códigoCadastro = códigoCadastro;
+	public Código(String tipoCódigo) {
+        códigoCadastro = UUID.randomUUID().toString();
         this.tipoCódigo = tipoCódigo;
-    }
-    --
+	}
+    
 
 }

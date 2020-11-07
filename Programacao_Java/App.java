@@ -16,10 +16,10 @@ public class App {
         Date data = formatador.parse(str);
         // (1996, 07, 25);
 
-        Disciplina matemática = new Disciplina(1, "Matemática", "Materia de fazer continhas");
-        Disciplina português = new Disciplina(2, "Português", "Materia de escrever certin");
+        Disciplina matemática = new Disciplina(1, "Matemática", "Matemática Básica");
+        Disciplina português = new Disciplina(2, "Português", "Português BR");
 
-        Professor iago = new Professor(1, "Iago", "da Costa", data, País.BRA, "iago.cland@gmail.com", "eduardo#fela@aepchegando");
+        Professor iago = new Professor("Iago", "da Costa", data, País.BRA, "iago.cland@gmail.com", "eduardo#fela@aepchegando");
 
         iago.setDisciplinaProfessor(matemática);
         iago.setDisciplinaProfessor(matemática);
