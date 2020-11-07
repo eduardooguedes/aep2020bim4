@@ -15,7 +15,7 @@ public class GerenciadorConexão implements AutoCloseable {
 
     public Connection getConexão() {
         return conexão;
-    }
+    }   
 
     @Override
     public void close() throws Exception {

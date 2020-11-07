@@ -1,7 +1,11 @@
 package classes;
 
 import java.sql.Date;
+import java.text.DateFormat;
 import java.util.HashSet;
+
+import javax.print.attribute.standard.DateTimeAtCreation;
+import javax.swing.JOptionPane;
 
 import valueObjects.*;
 
@@ -10,10 +14,11 @@ public class Postagem {
     private Código códigoPostagem;
     private String título;
     private String conteúdo;
-    private Date dataPostagem;  
+    private String dataPostagem;  
     private Disciplina disciplinaPrincipal;
 
     HashSet<Disciplina> listaDisciplinas = new HashSet<Disciplina>();
+
 
     public Postagem(String títuloPostagem, String conteúdoPostagem, HashSet<Disciplina> listaDisciplinaProfessor){
         this.códigoPostagem = new Código("Postagem");
@@ -46,4 +51,10 @@ public class Postagem {
         this.listaDisciplinas.add(disciplina);
     }
 
+    public void getDataHoraAtual(){
+        java.util.Date d = new Date(0);
+        this.dataPostagem = java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(d);
+        JOptionPane.showMessageDialog(null, "Hora "+ dataPostagem.toString() +" instanciada com sucesso ");
+    }
+    
 }
