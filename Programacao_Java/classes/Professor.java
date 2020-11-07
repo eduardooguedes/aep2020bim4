@@ -22,7 +22,7 @@ public class Professor {
     HashSet<Chat> chatProfessor = new HashSet<Chat>();
     HashSet<Postagem> postagensProfessor = new HashSet<Postagem>();
 
-    public Professor(String nomeProfessor, String sobrenomeProfessor, FormatoDataHoraAtual data, País paísProfessor, String emailProfessor, String senhaProfessor) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public Professor(String nomeProfessor, String sobrenomeProfessor, DataNascimento data, País paísProfessor, String emailProfessor, String senhaProfessor) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         this.códigoProfessor = new Código("Prof");
         this.nome = new Nome(nomeProfessor, sobrenomeProfessor);
         this.dataNascimento = data;
@@ -31,7 +31,7 @@ public class Professor {
         this.senha = new Senha(senhaProfessor);
     }
 
-    public Professor(String string, String string2, FormatoDataHoraAtual data, País bra, String string3,
+    public Professor(String string, String string2, DataNascimento data, País bra, String string3,
 			String string4) {
 	}
 
