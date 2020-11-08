@@ -3,16 +3,69 @@
 #include <conio.h>
 #include <string.h>
 #include <locale.h>
+#include <time.h>
+
+
+typedef struct tipoElemento{
+	char caracter;
+	struct tipoElemento *proximo;
+}TE;
+
+typedef struct tipoLista{
+	TE *inicio;
+	TE *fim;
+}TL;
 
 typedef struct tipoPessoa{
 	int id;
 	char nomeCompleto[70];
 	char dataNascimento[11];
 	char pais[30];
-	char senha[40];
+	char sal[21];
+	char hash[40];
 	char email[40];
-	
 }TP;
+
+TL tabelaHashing[10];
+
+void inicializar ()
+{
+	int i = 0;
+	for (i = 0; i < 10; i++)
+	{
+		tabelaHashing[i].inicio = NULL;
+		tabelaHashing[i].fim = NULL;
+	}
+}
+
+int hash (int valor)
+{
+	return valor % 10;
+}
+
+void apresentar ()
+{
+	int i;
+	
+	for (i = 0; i < 10; i++) //para percorrer a tabela hashing
+	{
+		TE *aux;
+		aux = tabelaHashing[i].inicio;
+		if (aux != NULL)
+		{
+			printf("\n Indice: %d - ", i);
+			while (aux != NULL) //para percorrer as listas encadeadas
+			{
+				printf("%c | ", aux->caracter);
+				aux = aux->proximo;
+			}
+		}
+		else
+		{
+			printf("\n Indice: %d -  ", i);
+		}
+	}
+}
 
 typedef struct tipoNo{
 	
@@ -45,9 +98,9 @@ TN* inserir(TN *raiz, TP *novaPessoa)
 
 void lerDados(TP *novaPessoa, int idPessoa)
 {
-	
-	
+	srand(time(NULL));
 	novaPessoa->id = idPessoa;
+	char senhaCadastro[40];
 	
 	printf("\n Informe o nome completo do novo usuário: ");
 	fflush(stdin);
@@ -64,7 +117,57 @@ void lerDados(TP *novaPessoa, int idPessoa)
 	printf("\n Informe o email do novo usuário: ");
 	fflush(stdin);
 	gets(novaPessoa->email);
+	int i;
+	for(i = 0; i < 20 ; i++){//criar aleatoriamente um sal para o usuário
+		novaPessoa->sal[i] = '!' + (char)(rand()%93);
+	}
+	novaPessoa->sal[i] = '\0';
 	
+	
+	printf("\n Digite uma senha para %s:", novaPessoa->nomeCompleto);
+	fflush(stdin);
+	gets(senhaCadastro);
+
+	strcat(senhaCadastro, novaPessoa->sal);
+	
+	int k, indice = 0;
+	
+	for (k = 0; k < strlen(senhaCadastro); k++)//espalhar na tabela hashing
+	{
+		TE *novoCaracter;
+		novoCaracter = new TE;
+		
+		novoCaracter->caracter = senhaCadastro[k];
+		novoCaracter->proximo = NULL;
+		
+		indice = hash(senhaCadastro[k]);
+		
+		if (tabelaHashing[indice].inicio == NULL)
+		{
+			tabelaHashing[indice].inicio = novoCaracter;
+			tabelaHashing[indice].fim = novoCaracter;
+		}
+		else
+		{
+			tabelaHashing[indice].fim->proximo = novoCaracter;
+			tabelaHashing[indice].fim = novoCaracter;
+		}
+	}
+	int j;
+	
+	for (i = 0; i < 10; i++)//atribuir para a senha criptografada(hash) do novo usuário
+	{
+		TE *aux;
+		aux = tabelaHashing[i].inicio;
+		while (aux != NULL)
+		{
+			novaPessoa->hash[j] = aux->caracter;
+			j++;
+			aux = aux->proximo;
+		}
+		novaPessoa->sal[20] = '\0';
+	}
+	novaPessoa->hash[j] = '\0';
 }
 
 int consultarRecursivo(TN *auxRaiz, char nomeBusca[30])
@@ -90,6 +193,100 @@ int consultarRecursivo(TN *auxRaiz, char nomeBusca[30])
 	}
 } 
 
+TN* consultarLoginRecursivo(TN *auxRaiz, char nomeBusca[40])
+{
+	
+	if(auxRaiz == NULL)
+	{
+		return auxRaiz;
+	}else
+	{
+		if(strcmp(auxRaiz->pessoa.nomeCompleto, nomeBusca) == 0)
+		{
+			return auxRaiz;
+		}else
+		{
+			if(strcmp(auxRaiz->pessoa.nomeCompleto, nomeBusca) > 0)
+			{
+				return consultarLoginRecursivo(auxRaiz->esq, nomeBusca);
+			}else
+			{
+				return consultarLoginRecursivo(auxRaiz->dir, nomeBusca);
+			}
+		}
+	}
+}
+
+void validarLogin(TN *aux, char loginInformado[40], char senhaInformada[40]){
+	
+	strcat(senhaInformada, aux->pessoa.sal);
+	
+	inicializar();
+	int indice, j;
+
+	for (j = 0; j < strlen(senhaInformada); j++)//espalhar na tabela hashing
+	{
+		TE *novoCaracter;
+		novoCaracter = new TE;
+		
+		novoCaracter->caracter = senhaInformada[j];
+		novoCaracter->proximo = NULL;
+		
+		indice = hash(senhaInformada[j]);
+		
+		if (tabelaHashing[indice].inicio == NULL)
+		{
+			tabelaHashing[indice].inicio = novoCaracter;
+			tabelaHashing[indice].fim = novoCaracter;
+		}
+		else
+		{
+			tabelaHashing[indice].fim->proximo = novoCaracter;
+			tabelaHashing[indice].fim = novoCaracter;
+		}
+	}
+	
+	int q, k = 0;
+	
+	char hashDaSenhaInformada[40];
+	
+	for(q = 0; q < 10; q++){
+		TE *aux1;
+		aux1 = tabelaHashing[q].inicio;
+		while(aux1 != NULL){
+			hashDaSenhaInformada[k] = aux1->caracter;
+			k++;
+			aux1 = aux1->proximo;
+		}
+	}
+	hashDaSenhaInformada[k] = '\0';
+	
+	if((strcmp(hashDaSenhaInformada, aux->pessoa.hash) == 0) && strcmp(loginInformado, aux->pessoa.email) == 0){
+		printf("\n Login feito com sucesso!");
+		printf("\n Seja bem vindo(a) %s", aux->pessoa.nomeCompleto);
+	}else{
+		printf("\n Não foi possível efetuar o login.");
+	}
+	getch();
+}
+
+void logar(TN *usuario){
+	
+	char loginInformado[40];
+	char senhaInformada[40];
+	
+	printf("\n Informe o login: ");
+	fflush(stdin);
+	gets(loginInformado);
+	
+	printf("\n Informe a senha: ");
+	fflush(stdin);
+	gets(senhaInformada);
+	
+	validarLogin(usuario, loginInformado, senhaInformada);
+	
+}
+
 void preOrdem(TN *raiz)
 {
 	if(raiz != NULL){
@@ -99,6 +296,8 @@ void preOrdem(TN *raiz)
 		printf("\n Email: %s", raiz->pessoa.email);
 		printf("\n País: %s", raiz->pessoa.pais);
 		printf("\n Data de Nascimento: %s", raiz->pessoa.dataNascimento);
+		printf("\n Sal: %s", raiz->pessoa.sal);
+		printf("\n Hash: %s", raiz->pessoa.hash);
 		printf("\n-----------------------------\n");
 		preOrdem(raiz->esq);
 		preOrdem(raiz->dir);
@@ -116,6 +315,8 @@ void emOrdem(TN *raiz)
 		printf("\n Email: %s", raiz->pessoa.email);
 		printf("\n País: %s", raiz->pessoa.pais);
 		printf("\n Data de Nascimento: %s", raiz->pessoa.dataNascimento);
+		printf("\n Sal: %s", raiz->pessoa.sal);
+		printf("\n Hash: %s  %d", raiz->pessoa.hash);
 		printf("\n-----------------------------\n");
 	
 		emOrdem(raiz->dir);
@@ -134,6 +335,8 @@ void posOrdem(TN *raiz)
 		printf("\n Email: %s", raiz->pessoa.email);
 		printf("\n País: %s", raiz->pessoa.pais);
 		printf("\n Data de Nascimento: %s", raiz->pessoa.dataNascimento);
+		printf("\n Sal: %s", raiz->pessoa.sal);
+		printf("\n Hash: %s", raiz->pessoa.hash);
 		printf("\n-----------------------------\n");
 	}
 }
@@ -287,7 +490,6 @@ int main(){
 	raiz = NULL;
 	
 	TP pessoa;
-	
 	int opcao;
 	int id = 1;
 	
@@ -298,6 +500,7 @@ int main(){
 		printf("\n 4 - Apresentar usuários em pos-ordem.");
 		printf("\n 5 - Consultar usuário.");
 		printf("\n 6 - Remover um usuário.");
+		printf("\n 7 - Login do usuário");
 		printf("\n 9 - Limpar tela.");
 		printf("\n 0 - Sair");
 		printf("\n Escolha uma das opcoes:");
@@ -306,6 +509,7 @@ int main(){
 		{
 			case 1: 
 			{
+				inicializar();
 				lerDados(&pessoa, id);
 				raiz = inserir(raiz, &pessoa);
 				id++;
@@ -362,11 +566,27 @@ int main(){
 			}
 			case 6:
 				{
-					char nomeRemover[30];
-					printf("\n Informe o nome completo do usuário que você deseja excluir: ");
+				char nomeRemover[30];
+				printf("\n Informe o nome completo do usuário que você deseja excluir: ");
+				fflush(stdin);
+				gets(nomeRemover);
+				raiz = remover(raiz, nomeRemover);
+				break;
+				}
+			case 7:
+				{
+					char loginUsuario[40];
+					printf("\n Informe o nome completo do usuário que fará o login: ");
 					fflush(stdin);
-					gets(nomeRemover);
-					raiz = remover(raiz, nomeRemover);
+					gets(loginUsuario);
+					raiz = consultarLoginRecursivo(raiz, loginUsuario);
+					if(raiz != NULL){
+						logar(raiz);
+					}else
+					{
+						printf("\n Usuário nao encontrado!");
+					}
+					break;
 				}
 			case 9: system("cls"); break;
 		}
