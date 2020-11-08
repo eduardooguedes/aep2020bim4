@@ -12,7 +12,7 @@ public class Professor {
 
     private Código códigoProfessor;
     private Nome nome;
-    private Date dataNascimento;
+    private DataNascimento dataNascimento;
     private País país;
     private Senha senha;
     private Email email;
@@ -31,16 +31,16 @@ public class Professor {
         this.senha = new Senha(senhaProfessor);
     }
 
-    public Professor(String string, String string2, DataNascimento data, País bra, String string3,
-			String string4) {
-	}
+    public String getDataNascimento(){
+        return dataNascimento.getDataCompleta();
+    }
 
 	public Senha getSenha(){
         return this.senha;
     }
 
     public String getDadosProfessor(){
-        return "[ " + email.getEmail() + " - " + nome.getNomeCompleto() + " - " + dataNascimento.getDate() + '/' + dataNascimento.getMonth() + '/' + dataNascimento.getYear() + " - " + país.getNomePaís() + " ]";
+        return "[ " + email.getEmail() + " - " + nome.getNomeCompleto() + " - " + dataNascimento.getDataCompleta() + " - " + país.getNomePaís() + " ]";
     }    
 
     public void setDisciplinaProfessor(Disciplina disciplina){

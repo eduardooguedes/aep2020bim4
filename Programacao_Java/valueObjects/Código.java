@@ -12,5 +12,7 @@ public class Código {
         this.tipoCódigo = tipoCódigo;
 	}
     
-
+    public String getCodigo(){
+        return códigoCadastro;
+    }
 }
