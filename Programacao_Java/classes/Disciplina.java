@@ -3,34 +3,36 @@ package classes;
 import java.util.ArrayList;
 import java.util.List;
 
+import valueObjects.Código;
+
 public class Disciplina{
     
-    private int códigoDisciplina;
-    private String nomeDisciplina;
-    private String descriçãoDisciplina;
+    private Código códigoDisciplina;
+    private String nome;
+    private String descrição;
     
-    private Chat chatDisciplina = new Chat("Disciplina", 2);
+    private Chat chatDisciplina = new Chat("Disc");
 
     public Disciplina(int códigoDisciplina, String nomeDisciplina, String descriçãoDisciplina){
-        this.códigoDisciplina = códigoDisciplina;
-        this.nomeDisciplina = nomeDisciplina;
-        setDescricaoDisciplina(descriçãoDisciplina);
+        this.códigoDisciplina = new Código("Disc");
+        this.nome = nomeDisciplina;
+        setDescricao(descriçãoDisciplina);
     }
 
-    private void setDescricaoDisciplina(String descriçãoDisciplina) {
+    private void setDescricao(String descriçãoDisciplina) {
         if(descriçãoDisciplina.length() < 10){
             throw new RuntimeException("Descrição muito pequena.");
         }
 
-        this.descriçãoDisciplina = descriçãoDisciplina;
+        this.descrição = descriçãoDisciplina;
     }
 
-    public String getNomeDisciplina(){
-        return nomeDisciplina;
+    public String getNome(){
+        return this.nome;
     }
 
-    public String getDescriçãoDisciplina(){
-        return descriçãoDisciplina;
+    public String getDescrição(){
+        return this.descrição;
     }
 
 }

@@ -11,32 +11,36 @@ import classes.Postagem;
 public class Professor {
 
     private Código códigoProfessor;
-    private Nome nomeProfessor;
-    private Date dataNascimentoProfessor;
-    private País paísProfessor;
-    private Senha senhaProfessor;
-    private Email emailProfessor;
-    private Disciplina disciplinaPrincipal;
+    private Nome nome;
+    private Date dataNascimento;
+    private País país;
+    private Senha senha;
+    private Email email;
+    private Disciplina disciplina;
 
     HashSet<Disciplina> listaDisciplinaProfessor = new HashSet<Disciplina>();    
     HashSet<Chat> chatProfessor = new HashSet<Chat>();
     HashSet<Postagem> postagensProfessor = new HashSet<Postagem>();
 
-    public Professor(int códigoProfessor, String nomeProfessor, String sobrenomeProfessor, Date dataNascimentoProfessor, País paísProfessor, String emailProfessor, String senhaProfessor) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        // gerar código ---> this.códigoProfessor = gerarCódigo();
-        this.códigoProfessor = new Código(códigoProfessor, "Professor");
-        this.nomeProfessor = new Nome(nomeProfessor, sobrenomeProfessor);
-        this.dataNascimentoProfessor = dataNascimentoProfessor;
-        this.paísProfessor = paísProfessor;
-        this.emailProfessor = new Email(emailProfessor);
-        this.senhaProfessor = new Senha(senhaProfessor);
+    public Professor(String nomeProfessor, String sobrenomeProfessor, DataNascimento data, País paísProfessor, String emailProfessor, String senhaProfessor) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        this.códigoProfessor = new Código("Prof");
+        this.nome = new Nome(nomeProfessor, sobrenomeProfessor);
+        this.dataNascimento = data;
+        this.país = paísProfessor;
+        this.email = new Email(emailProfessor);
+        this.senha = new Senha(senhaProfessor);
     }
 
-    public Senha getSenha(){
-        return this.senhaProfessor;
+    public Professor(String string, String string2, DataNascimento data, País bra, String string3,
+			String string4) {
+	}
+
+	public Senha getSenha(){
+        return this.senha;
     }
+
     public String getDadosProfessor(){
-        return "[ " + emailProfessor.getEmail() + " - " + nomeProfessor.getNomeCompleto() + " - " + dataNascimentoProfessor.getDate() + '/' + dataNascimentoProfessor.getMonth() + '/' + dataNascimentoProfessor.getYear() + " - " + paísProfessor.getNomePaís() + " ]";
+        return "[ " + email.getEmail() + " - " + nome.getNomeCompleto() + " - " + dataNascimento.getDate() + '/' + dataNascimento.getMonth() + '/' + dataNascimento.getYear() + " - " + país.getNomePaís() + " ]";
     }    
 
     public void setDisciplinaProfessor(Disciplina disciplina){
@@ -44,28 +48,28 @@ public class Professor {
     }
 
     public String getQuantidadeDisciplinas(){
-        return "O professor " + nomeProfessor.getNome() + ", leciona atualmente " + listaDisciplinaProfessor.size() + " disciplinas.";
+        return "O professor " + nome.getNome() + ", leciona atualmente " + listaDisciplinaProfessor.size() + " disciplinas.";
     }
 
     public void getDisciplinasLecionadas(){
         for(Disciplina disciplina : listaDisciplinaProfessor){
-            System.out.println(disciplina.getNomeDisciplina());
+            System.out.println(disciplina.getNome());
         }
     }
 
     public void criarChat(Professor professor){
-        Chat chat = new Chat("Professor-Professor", 4);
+        Chat chat = new Chat("Prof-Prof");
         chatProfessor.add(chat);
     }
 
     public void criarPostagem(){
-        Postagem postagem = new Postagem(6, "Tudo pronto", ":D", this.disciplinaPrincipal);
+        Postagem postagem = new Postagem("Tudo pronto", ":D", this.disciplina);
         postagensProfessor.add(postagem);
     }
 
     public void criarPostagemDisciplinas(){
         //dados inseridos manualmente para simular inserção do usuário
-        Postagem postagem = new Postagem(5, "AEP 2020", "Equipe EFI", listaDisciplinaProfessor);
+        Postagem postagem = new Postagem("AEP 2020", "Equipe EFI", listaDisciplinaProfessor);
         postagensProfessor.add(postagem);
     }
 

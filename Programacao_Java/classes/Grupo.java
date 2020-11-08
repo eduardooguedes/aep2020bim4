@@ -9,20 +9,20 @@ import valueObjects.*;
 public class Grupo {
     
     private Código códigoGrupo;
-    private String nomeGrupo;
-    private String descriçãoGrupo;
+    private String nome;
+    private String descrição;
     private Professor professorAdmin;
 
     List<Professor> listaModeradores = new ArrayList<Professor>();
     HashSet<Professor> listaParticipantes = new HashSet<Professor>();
     HashSet<Postagem> postagensGrupo = new HashSet<Postagem>();
 
-    private Chat chatGrupo = new Chat("Grupo", 1);
+    private Chat chatGrupo = new Chat("Grupo");
 
     public Grupo(int códigoGrupo, String nomeGrupo, String descriçãoGrupo, Professor professorAdmin){
-        this.códigoGrupo = new Código(códigoGrupo, "Grupo");
-        this.nomeGrupo = nomeGrupo;
-        this.descriçãoGrupo = descriçãoGrupo;
+        this.códigoGrupo = new Código("Grupo");
+        this.nome = nomeGrupo;
+        this.descrição = descriçãoGrupo;
         this.professorAdmin = professorAdmin;
     }
 
@@ -38,9 +38,8 @@ public class Grupo {
         }
     }
 
-    public void criarPostagemGrupo(){
-        Postagem postagem = new Postagem(7, "Leões", "Esse grupo só tem fera");//EXEMPLO
-        postagensGrupo.add(postagem);
-    }
-
+    // public void criarPostagemGrupo(){
+    //     Postagem postagem = new Postagem(7, "Leões", "Esse grupo só tem fera");//EXEMPLO
+    //     postagensGrupo.add(postagem);
+    // }
 }
