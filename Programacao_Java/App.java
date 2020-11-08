@@ -31,8 +31,8 @@ public class App {
         // DataFormatada dataa = new DataFormatada(date);
         // JOptionPane.showMessageDialog(null, dataa.getData());
 
-        Disciplina matemática = new Disciplina(1, "Matemática", "Matemática Básica");
-        Disciplina português = new Disciplina(2, "Português", "Português BR");
+        Disciplina matemática = new Disciplina("Matemática", "Matemática Básica");
+        Disciplina português = new Disciplina("Português", "Português BR");
 
         // Professor iago = new Professor("Iago", "da Costa", data, País.BRA, "iago.cland@gmail.com",
         //         "iago123");

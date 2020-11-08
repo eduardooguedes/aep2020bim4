@@ -1,15 +1,12 @@
 package classes;
 
-import javax.swing.Box;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 public class Login {
 
     private Professor usuário;
-    private Box box = Box.createHorizontalBox();
+    // private Box box = Box.createHorizontalBox();
     // private JTextField emailInserido = new JTextField();
     private JPasswordField senhaInserida = new JPasswordField();
         
@@ -19,7 +16,6 @@ public class Login {
         // box.add(senhaInserida);
         
         // int value = JOptionPane.showConfirmDialog(null, box, "LOGIN", JOptionPane.OK_CANCEL_OPTION);
-        
         
         String email = JOptionPane.showInputDialog(null, "Email: "); 
         int value = JOptionPane.showConfirmDialog(null, senhaInserida, "Senha: ", JOptionPane.OK_CANCEL_OPTION);
@@ -38,7 +34,4 @@ public class Login {
     private void efetuarLogin(String email, String senha) {
         JOptionPane.showMessageDialog(null, "     Login efetuado\n email: " + email + " \nsenha: " + senha);
     }
-
-
-
 }   
