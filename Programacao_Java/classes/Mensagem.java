@@ -15,5 +15,13 @@ public class Mensagem {
         this.mensagem = mensagem;
         //this.horaMensagem = new LocalDateTime.now();
     }
-  
+    
+    public Professor getProfessor(){
+        return this.professor;
+    }
+
+    public String getMensagem(){
+        return this.mensagem;
+    }
+
 }

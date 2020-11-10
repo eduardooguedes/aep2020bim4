@@ -6,20 +6,35 @@ import java.util.List;
 import valueObjects.*;
 
 public class Chat {
-    
-    private Código códigoChat;
+
+    private Código código;
     private String tipo;
 
     private List<Mensagem> mensagensChat = new ArrayList<Mensagem>();
 
-    public Chat(String tipoChat){
+    public Chat(String tipoChat) {
         this.tipo = tipoChat;
-        this.códigoChat = new Código("Chat");
+        this.código = setCódigo();
     }
 
-    public void adicionarMensagem(Professor professor, String texto){
+    public String getCódigo() {
+        return código.getCodigo();
+    }
+
+    private Código setCódigo(){
+        return new Código("Chat");
+    }
+
+    public void adicionarMensagem(Professor professor, String texto) {
         Mensagem mensagem = new Mensagem(professor, texto);
         mensagensChat.add(mensagem);
     }
 
+    public List<Mensagem> getListaMensagens() {
+        return mensagensChat;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
 }

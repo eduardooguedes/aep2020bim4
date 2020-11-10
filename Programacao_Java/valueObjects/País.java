@@ -276,6 +276,4 @@ public enum País {
         return this.codigoDoisDigitos;
     }
 
-    //
-
 }

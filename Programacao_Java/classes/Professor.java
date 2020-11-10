@@ -2,28 +2,28 @@ package classes;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
 import java.util.HashSet;
 
 import valueObjects.*;
-import classes.Postagem;
 
 public class Professor {
 
-    private Código códigoProfessor;
+    private Código código;
     private Nome nome;
-    private Date dataNascimento;
+    private DataNascimento dataNascimento;
     private País país;
     private Senha senha;
     private Email email;
     private Disciplina disciplina;
 
-    HashSet<Disciplina> listaDisciplinaProfessor = new HashSet<Disciplina>();    
+    HashSet<Disciplina> listaDisciplinaProfessor = new HashSet<Disciplina>();
     HashSet<Chat> chatProfessor = new HashSet<Chat>();
     HashSet<Postagem> postagensProfessor = new HashSet<Postagem>();
 
-    public Professor(String nomeProfessor, String sobrenomeProfessor, DataNascimento data, País paísProfessor, String emailProfessor, String senhaProfessor) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        this.códigoProfessor = new Código("Prof");
+    public Professor(String nomeProfessor, String sobrenomeProfessor, DataNascimento data, País paísProfessor,
+            String emailProfessor, String senhaProfessor)
+            throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        this.código = setCódigoProfessor();
         this.nome = new Nome(nomeProfessor, sobrenomeProfessor);
         this.dataNascimento = data;
         this.país = paísProfessor;
@@ -31,17 +31,61 @@ public class Professor {
         this.senha = new Senha(senhaProfessor);
     }
 
-    public Professor(String string, String string2, DataNascimento data, País bra, String string3,
-			String string4) {
-	}
+    public String getCódigoProfessor() {
+        return código.getCodigo();
+    }
 
+    private Código setCódigoProfessor(){
+        return new Código("Prof");
+    }
+
+    //NOME
+    public String getNomeCompleto(){
+        return this.nome.getNomeCompleto();
+    }
+
+    public String getNome(){
+        return this.nome.getNome();
+    }
+
+    public String getSobrenome(){
+        return this.nome.getSobrenome();
+    }
+
+            //EDITAR SET PARA PASSAR STRING E FORMATAR
+    public String getDataNascimento() {
+        return dataNascimento.getDataCompleta();
+    }
+
+    public String getTrêsDigitosPaís(){
+        return país.getTrêsDigitos();
+    }
+    
+    public String getDoisDigitosPaís(){
+        return país.getDoisDigitos();
+    }
+
+    public String getNomePaís(){
+        return país.getNomePaís();
+    }
+
+    public String getEmail(){
+        return this.email.getEmail();
+    }
+
+
+    //IMPLEMENTAR SENHA HASH
 	public Senha getSenha(){
         return this.senha;
     }
 
+
     public String getDadosProfessor(){
-        return "[ " + email.getEmail() + " - " + nome.getNomeCompleto() + " - " + dataNascimento.getDate() + '/' + dataNascimento.getMonth() + '/' + dataNascimento.getYear() + " - " + país.getNomePaís() + " ]";
-    }    
+        return "[ " + email.getEmail() + " - " + nome.getNomeCompleto() + " - " + dataNascimento.getDataCompleta() + " - " + país.getNomePaís() + " ]";
+    }
+
+
+    //========================= DISCIPLINAS =============================\\
 
     public void setDisciplinaProfessor(Disciplina disciplina){
         listaDisciplinaProfessor.add(disciplina);
@@ -57,10 +101,15 @@ public class Professor {
         }
     }
 
+
+    //========================= CHAT =============================\\
+
     public void criarChat(Professor professor){
         Chat chat = new Chat("Prof-Prof");
         chatProfessor.add(chat);
     }
+
+    //========================= POSTAGENS =============================\\
 
     public void criarPostagem(){
         Postagem postagem = new Postagem("Tudo pronto", ":D", this.disciplina);
