@@ -24,6 +24,7 @@ typedef struct tipoPessoa{
 	char sal[21];
 	char hash[40];
 	char email[40];
+	char tipoUsuario[20];
 }TP;
 
 TL tabelaHashing[10];
@@ -83,7 +84,7 @@ TN* inserir(TN *raiz, TP *novaPessoa)
 		raiz->dir = NULL;
 	}else
 	{
-		if((strcmp(novaPessoa->nomeCompleto, raiz->pessoa.nomeCompleto)) < 0)
+		if((strcmp(novaPessoa->email, raiz->pessoa.email)) < 0)
 		//if(novaPessoa->id < raiz->pessoa.id)
 		{
 			raiz->esq = inserir(raiz->esq, novaPessoa);
@@ -106,6 +107,10 @@ void lerDados(TP *novaPessoa, int idPessoa)
 	fflush(stdin);
 	gets(novaPessoa->nomeCompleto);
 	
+	printf("\n Informe o email do novo usuário: ");
+	fflush(stdin);
+	gets(novaPessoa->email);
+	
 	printf("\n Informe a data de nascimento do novo usuário (DD/MM/AAAA): ");
 	fflush(stdin);
 	gets(novaPessoa->dataNascimento);
@@ -114,9 +119,22 @@ void lerDados(TP *novaPessoa, int idPessoa)
 	fflush(stdin);
 	gets(novaPessoa->pais);
 	
-	printf("\n Informe o email do novo usuário: ");
-	fflush(stdin);
-	gets(novaPessoa->email);
+	int opcao;
+	do{
+		printf("\n Qual será o tipo de usuário.");
+		printf("\n 1 - Administrador");
+		printf("\n 2 - Professor");
+		printf("\n 3 - Visitante");
+		printf("\n Escolha um tipo: ");
+		fflush(stdin);
+		scanf("%d", &opcao);
+		switch(opcao){
+			case 1: strcpy(novaPessoa->tipoUsuario, "Administrador"); break;
+			case 2: strcpy(novaPessoa->tipoUsuario, "Professor"); break;
+			case 3: strcpy(novaPessoa->tipoUsuario, "Visitante"); break;
+		}
+	}while(opcao < 1 || opcao > 3);
+	
 	int i;
 	for(i = 0; i < 20 ; i++){//criar aleatoriamente um sal para o usuário
 		novaPessoa->sal[i] = '!' + (char)(rand()%93);
@@ -124,7 +142,7 @@ void lerDados(TP *novaPessoa, int idPessoa)
 	novaPessoa->sal[i] = '\0';
 	
 	
-	printf("\n Digite uma senha para %s:", novaPessoa->nomeCompleto);
+	printf("\n Digite uma senha para %s:", novaPessoa->email);
 	fflush(stdin);
 	gets(senhaCadastro);
 
@@ -177,12 +195,12 @@ int consultarRecursivo(TN *auxRaiz, char nomeBusca[30])
 		return 0;
 	}else
 	{
-		if(strcmp(auxRaiz->pessoa.nomeCompleto, nomeBusca) == 0)
+		if(strcmp(auxRaiz->pessoa.email, nomeBusca) == 0)
 		{
 			return 1;
 		}else
 		{
-			if(strcmp(auxRaiz->pessoa.nomeCompleto, nomeBusca) > 0)
+			if(strcmp(auxRaiz->pessoa.email, nomeBusca) > 0)
 			{
 				return consultarRecursivo(auxRaiz->esq, nomeBusca);
 			}else
@@ -201,12 +219,12 @@ TN* consultarLoginRecursivo(TN *auxRaiz, char nomeBusca[40])
 		return auxRaiz;
 	}else
 	{
-		if(strcmp(auxRaiz->pessoa.nomeCompleto, nomeBusca) == 0)
+		if(strcmp(auxRaiz->pessoa.email, nomeBusca) == 0)
 		{
 			return auxRaiz;
 		}else
 		{
-			if(strcmp(auxRaiz->pessoa.nomeCompleto, nomeBusca) > 0)
+			if(strcmp(auxRaiz->pessoa.email, nomeBusca) > 0)
 			{
 				return consultarLoginRecursivo(auxRaiz->esq, nomeBusca);
 			}else
@@ -272,18 +290,13 @@ void validarLogin(TN *aux, char loginInformado[40], char senhaInformada[40]){
 
 void logar(TN *usuario){
 	
-	char loginInformado[40];
 	char senhaInformada[40];
-	
-	printf("\n Informe o login: ");
-	fflush(stdin);
-	gets(loginInformado);
-	
+
 	printf("\n Informe a senha: ");
 	fflush(stdin);
 	gets(senhaInformada);
 	
-	validarLogin(usuario, loginInformado, senhaInformada);
+	validarLogin(usuario, usuario->pessoa.email, senhaInformada);
 	
 }
 
@@ -296,6 +309,7 @@ void preOrdem(TN *raiz)
 		printf("\n Email: %s", raiz->pessoa.email);
 		printf("\n País: %s", raiz->pessoa.pais);
 		printf("\n Data de Nascimento: %s", raiz->pessoa.dataNascimento);
+		printf("\n Tipo de usuário: %s", raiz->pessoa.tipoUsuario);
 		printf("\n Sal: %s", raiz->pessoa.sal);
 		printf("\n Hash: %s", raiz->pessoa.hash);
 		printf("\n-----------------------------\n");
@@ -315,6 +329,7 @@ void emOrdem(TN *raiz)
 		printf("\n Email: %s", raiz->pessoa.email);
 		printf("\n País: %s", raiz->pessoa.pais);
 		printf("\n Data de Nascimento: %s", raiz->pessoa.dataNascimento);
+		printf("\n Tipo de usuário: %s", raiz->pessoa.tipoUsuario);
 		printf("\n Sal: %s", raiz->pessoa.sal);
 		printf("\n Hash: %s  %d", raiz->pessoa.hash);
 		printf("\n-----------------------------\n");
@@ -335,6 +350,7 @@ void posOrdem(TN *raiz)
 		printf("\n Email: %s", raiz->pessoa.email);
 		printf("\n País: %s", raiz->pessoa.pais);
 		printf("\n Data de Nascimento: %s", raiz->pessoa.dataNascimento);
+		printf("\n Tipo de usuário: %s", raiz->pessoa.tipoUsuario);
 		printf("\n Sal: %s", raiz->pessoa.sal);
 		printf("\n Hash: %s", raiz->pessoa.hash);
 		printf("\n-----------------------------\n");
@@ -349,7 +365,7 @@ TN* remover(TN *raiz, char nomeRemover[30])
 	
 	while (atual != NULL)
 	{
-		if(strcmp(atual->pessoa.nomeCompleto, nomeRemover) == 0)
+		if(strcmp(atual->pessoa.email, nomeRemover) == 0)
 		{
 			if (atual == raiz) //se nó que será excluído estiver na raiz
 			{
@@ -382,7 +398,7 @@ TN* remover(TN *raiz, char nomeRemover[30])
 									aux_ante = aux_atual;
 									aux_atual = aux_atual->dir;
 								}
-								strcpy(atual->pessoa.nomeCompleto, aux_atual->pessoa.nomeCompleto);
+								strcpy(atual->pessoa.email, aux_atual->pessoa.email);
 								aux_ante->dir = aux_atual->esq;
 							}
 						}
@@ -391,7 +407,7 @@ TN* remover(TN *raiz, char nomeRemover[30])
 			}
 			else
 			{
-				if(strcmp(atual->pessoa.nomeCompleto, anterior->pessoa.nomeCompleto) > 0)
+				if(strcmp(atual->pessoa.email, anterior->pessoa.email) > 0)
 				{
 					if (atual->dir == NULL)
 					{
@@ -409,7 +425,7 @@ TN* remover(TN *raiz, char nomeRemover[30])
 				}
 				else
 				{
-					if(strcmp(atual->pessoa.nomeCompleto, anterior->pessoa.nomeCompleto) < 0)
+					if(strcmp(atual->pessoa.email, anterior->pessoa.email) < 0)
 					{
 						if (atual->dir == NULL)
 						{
@@ -436,7 +452,7 @@ TN* remover(TN *raiz, char nomeRemover[30])
 								aux_ante = aux_atual;
 								aux_atual = aux_atual->dir;
 							}
-							strcpy(atual->pessoa.nomeCompleto, aux_atual->pessoa.nomeCompleto);
+							strcpy(atual->pessoa.email, aux_atual->pessoa.email);
 							if(aux_ante == atual)
 							{
 								aux_ante->esq = aux_atual->esq;
@@ -453,14 +469,14 @@ TN* remover(TN *raiz, char nomeRemover[30])
 		}
 		else
 		{
-			if(strcmp(nomeRemover, atual->pessoa.nomeCompleto) < 0)
+			if(strcmp(nomeRemover, atual->pessoa.email) < 0)
 			{
 				anterior = atual;
 				atual = atual->esq;
 			}
 			else
 			{
-				if(strcmp(nomeRemover, atual->pessoa.nomeCompleto) > 0)
+				if(strcmp(nomeRemover, atual->pessoa.email) > 0)
 				{
 					anterior = atual;
 					atual = atual->dir;
@@ -476,7 +492,7 @@ TN* remover(TN *raiz, char nomeRemover[30])
 	else
 	{
 		printf("\n Usuário encontrado!");
-		printf("\n %s foi removido(a) com sucesso!", atual->pessoa.nomeCompleto);
+		printf("\n %s foi removido(a) com sucesso!", atual->pessoa.email);
 		printf("\n Pressione qualquer tecla para voltar ao menu.");
 		getch();
 		free(atual);
@@ -551,7 +567,7 @@ int main(){
 			case 5:{
 				char nomeBusca[30];
 				int usuarioEncontrado;
-				printf("\n Informe o nome completo do usuário a ser consultado: ");
+				printf("\n Informe o email do usuário a ser consultado: ");
 				fflush(stdin);
 				gets(nomeBusca);
 				usuarioEncontrado = consultarRecursivo(raiz, nomeBusca);
@@ -567,7 +583,7 @@ int main(){
 			case 6:
 				{
 				char nomeRemover[30];
-				printf("\n Informe o nome completo do usuário que você deseja excluir: ");
+				printf("\n Informe o email do usuário que você deseja excluir: ");
 				fflush(stdin);
 				gets(nomeRemover);
 				raiz = remover(raiz, nomeRemover);
@@ -576,7 +592,7 @@ int main(){
 			case 7:
 				{
 					char loginUsuario[40];
-					printf("\n Informe o nome completo do usuário que fará o login: ");
+					printf("\n Informe o email do usuário: ");
 					fflush(stdin);
 					gets(loginUsuario);
 					raiz = consultarLoginRecursivo(raiz, loginUsuario);
@@ -584,7 +600,7 @@ int main(){
 						logar(raiz);
 					}else
 					{
-						printf("\n Usuário nao encontrado!");
+						printf("\n Usuário não encontrado!");
 					}
 					break;
 				}
