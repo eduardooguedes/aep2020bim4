@@ -20,7 +20,10 @@ public class MomentoDataHora {
         // dateTimeFormatado + "]");
     }
 
-    public String getMomento() {
+    public MomentoDataHora() {
+	}
+
+	public String getMomento() {
         return this.dataHoraFormatada;
     }
 

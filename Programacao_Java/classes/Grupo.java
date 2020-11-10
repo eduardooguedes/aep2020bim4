@@ -26,7 +26,6 @@ public class Grupo {
         this.professorAdmin = professorAdmin;
         setNovoChat();
     }
-
     
     private Código setcódigo() {
         return new Código("Grupo");

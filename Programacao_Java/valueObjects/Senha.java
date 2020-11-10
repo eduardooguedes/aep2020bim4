@@ -1,31 +1,33 @@
 package valueObjects;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+// import java.io.UnsupportedEncodingException;
+// import java.security.MessageDigest;
+// import java.security.NoSuchAlgorithmException;
 
 public class Senha {
     
-    private String senha;
-    private String senhaCriptografada;
+    private String senhaHash;
+    private String sal;
 
-    public Senha(String senha) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        this.senha = senha;
-        this.senhaCriptografada = digest(senha);
+    public Senha(String senha) {
+        this.senhaHash = hash(senha);
     }
 
-    public String digest(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        MessageDigest algoritmo = MessageDigest.getInstance("SHA-256");
-        byte digestMessage[] = algoritmo.digest(password.getBytes("UTF-8"));
-        StringBuilder hexPassword = new StringBuilder();
-        for (byte aByte : digestMessage) {
-            hexPassword.append(String.format("%02X", 0xFF & aByte));
-        }
-        return hexPassword.toString();
+    //GERAR HASH
+    private String hash(String senha) {
+        return senha;
     }
 
-    @Override
-    public String toString() {
-        return "Senha: " + senhaCriptografada;
+    public String getSenhaHash(){
+        return this.senhaHash;
+    }
+
+    public String getSal() {
+        return sal;
+    }
+
+    //UTILIZAR SAL GERADO
+    public String verificaSenha(String senhaLogin, String sal){
+        return sal;
     }
 }

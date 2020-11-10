@@ -12,7 +12,7 @@ public class Professor {
     private Nome nome;
     private DataNascimento dataNascimento;
     private País país;
-    private Senha senha;
+    private Senha senhaTemporaria;
     private Email email;
     private Disciplina disciplina;
 
@@ -23,62 +23,68 @@ public class Professor {
     public Professor(String nomeProfessor, String sobrenomeProfessor, DataNascimento data, País paísProfessor,
             String emailProfessor, String senhaProfessor)
             throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        this.código = setCódigoProfessor();
+        this.código = setCódigo();
         this.nome = new Nome(nomeProfessor, sobrenomeProfessor);
         this.dataNascimento = data;
         this.país = paísProfessor;
         this.email = new Email(emailProfessor);
-        this.senha = new Senha(senhaProfessor);
+        this.senhaTemporaria = new Senha(senhaProfessor);
     }
 
-    public String getCódigoProfessor() {
+    public String getCódigo() {
         return código.getCodigo();
     }
 
-    private Código setCódigoProfessor(){
-        return new Código("Prof");
+    private Código setCódigo() {
+        return new Código("Professor");
     }
 
-    //NOME
-    public String getNomeCompleto(){
+    // NOME
+    public String getNomeCompleto() {
         return this.nome.getNomeCompleto();
     }
 
-    public String getNome(){
+    public String getNome() {
         return this.nome.getNome();
     }
 
-    public String getSobrenome(){
+    public String getSobrenome() {
         return this.nome.getSobrenome();
     }
 
-            //EDITAR SET PARA PASSAR STRING E FORMATAR
+    // EDITAR SET PARA PASSAR STRING E FORMATAR
     public String getDataNascimento() {
         return dataNascimento.getDataCompleta();
     }
 
-    public String getTrêsDigitosPaís(){
+    public String getTrêsDigitosPaís() {
         return país.getTrêsDigitos();
     }
-    
-    public String getDoisDigitosPaís(){
+
+    public String getDoisDigitosPaís() {
         return país.getDoisDigitos();
     }
 
-    public String getNomePaís(){
+    public String getNomePaís() {
         return país.getNomePaís();
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return this.email.getEmail();
     }
 
-
-    //IMPLEMENTAR SENHA HASH
-	public Senha getSenha(){
-        return this.senha;
+    // IMPLEMENTAR SENHA HASH
+    public Senha getSenha() {
+        return this.senhaTemporaria;
     }
 
+    public String getCódigoDisciplinaPrincipal() {
+		return this.disciplina.getCódigo();
+    }
+    
+    public String getDisciplina(){
+        return this.disciplina.getNome();
+    }
 
     public String getDadosProfessor(){
         return "[ " + email.getEmail() + " - " + nome.getNomeCompleto() + " - " + dataNascimento.getDataCompleta() + " - " + país.getNomePaís() + " ]";
