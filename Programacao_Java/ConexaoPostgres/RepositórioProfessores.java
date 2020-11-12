@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import classes.Professor;
+import valueObjects.Senha;
 
 public class RepositórioProfessores{
     private Connection conexão;
@@ -23,6 +24,7 @@ public class RepositórioProfessores{
              "codigo char(36) not null primary key, " +
              "nome varchar(25) not null, " +
              "sobrenome varchar(50) not null, " +
+             "dataNascimento date not null," +
              "pais char(3) not null," +
              "disciplinaCod char(36) not null," +
              "email varchar(60) not null unique," +
@@ -38,16 +40,17 @@ public class RepositórioProfessores{
     public void cadastrarProfessor(Professor novoProfessor){
         try{
             if(insert == null){
-                insert = conexão.prepareStatement("insert into professores (codigo, nome, sobrenome, pais, disciplinaCod, email, senhaHash, sal) values (?, ?, ?, ?, ?, ?, ?, ?)");
+                insert = conexão.prepareStatement("insert into professores (codigo, nome, sobrenome, dataNascimento, pais, disciplinaCod, email, senhaHash, sal) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
             }
             insert.setString(1, novoProfessor.getCódigo());
             insert.setString(2, novoProfessor.getNome());
             insert.setString(3, novoProfessor.getSobrenome());
-            insert.setString(4, novoProfessor.getTrêsDigitosPaís());
-            insert.setString(5, novoProfessor.getCódigoDisciplinaPrincipal());
-            insert.setString(6, novoProfessor.getEmail());
-            insert.setString(7, novoProfessor.getSenha().getSenhaHash());
-            insert.setString(8, novoProfessor.getSenha().getSal());
+            insert.setString(4, novoProfessor.getDataNascimento());
+            insert.setString(5, novoProfessor.getTrêsDigitosPaís());
+            insert.setString(6, novoProfessor.getCódigoDisciplinaPrincipal());
+            insert.setString(7, novoProfessor.getEmail());
+            insert.setString(8, novoProfessor.getSenha().getSenhaHash());
+            insert.setString(9, novoProfessor.getSenha().getSal());
 
             insert.executeUpdate();
             conexão.commit();
@@ -56,21 +59,31 @@ public class RepositórioProfessores{
         }
     }
 
-    public void encontrarUsuário(String emailLogin, String senhaLogin){
+    public Professor buscarUsuário(String emailLogin, String senhaLogin){
         try (Statement select = conexão.createStatement();
-            ResultSet resultado = select.executeQuery("select email, senhaHash, sal from professores where email = '" +  emailLogin + "'");) {
+            ResultSet resultado = select.executeQuery("select codigo, nome, sobrenome, pais, codDisciplina, email, senhaHash, sal from professores where email = '" +  emailLogin + "'");) {
             
             if(resultado.next()){
                 String email = resultado.getString("email");
                 String senha = resultado.getString("senhaHash");
                 String sal = resultado.getString("sal");
 
+
+                if(email.equals(emailLogin)  && Senha.verificaSenha(senhaLogin, sal) == senha){
+                    // Professor professorLogin = new Professor() 
+                }
+
                 //FINISH
+            }
+            else
+            {
+                return null;
             }
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
     public void close() throws Exception{

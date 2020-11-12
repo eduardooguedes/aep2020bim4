@@ -2,17 +2,18 @@ package classes;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+        import java.time.LocalDate;
 import java.util.HashSet;
 
 import valueObjects.*;
 
 public class Professor {
-
     private Código código;
     private Nome nome;
+    private Nome sobrenome;
     private DataNascimento dataNascimento;
     private País país;
-    private Senha senhaTemporaria;
+    private Senha senha;
     private Email email;
     private Disciplina disciplina;
 
@@ -20,15 +21,14 @@ public class Professor {
     HashSet<Chat> chatProfessor = new HashSet<Chat>();
     HashSet<Postagem> postagensProfessor = new HashSet<Postagem>();
 
-    public Professor(String nomeProfessor, String sobrenomeProfessor, DataNascimento data, País paísProfessor,
-            String emailProfessor, String senhaProfessor)
-            throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public Professor(Nome nomeProfessor, Nome sobrenomeProfessor, DataNascimento data, País paísProfessor, 
+                    Email emailProfessor, Senha senhaProfessor) {
         this.código = setCódigo();
-        this.nome = new Nome(nomeProfessor, sobrenomeProfessor);
+        this.nome = nomeProfessor;
         this.dataNascimento = data;
         this.país = paísProfessor;
-        this.email = new Email(emailProfessor);
-        this.senhaTemporaria = new Senha(senhaProfessor);
+        this.email = emailProfessor;
+        this.senha = senhaProfessor;
     }
 
     public String getCódigo() {
@@ -39,23 +39,22 @@ public class Professor {
         return new Código("Professor");
     }
 
-    // NOME
-    public String getNomeCompleto() {
-        return this.nome.getNomeCompleto();
-    }
-
     public String getNome() {
         return this.nome.getNome();
     }
 
     public String getSobrenome() {
-        return this.nome.getSobrenome();
+        return this.sobrenome.getNome();
     }
 
     // EDITAR SET PARA PASSAR STRING E FORMATAR
     public String getDataNascimento() {
-        return dataNascimento.getDataCompleta();
+        return dataNascimento.getDataFormatada();
     }
+
+    public LocalDate getDataPadrao() {
+		return dataNascimento.getDataPadrao();
+	}
 
     public String getTrêsDigitosPaís() {
         return país.getTrêsDigitos();
@@ -75,7 +74,7 @@ public class Professor {
 
     // IMPLEMENTAR SENHA HASH
     public Senha getSenha() {
-        return this.senhaTemporaria;
+        return this.senha;
     }
 
     public String getCódigoDisciplinaPrincipal() {
@@ -87,7 +86,7 @@ public class Professor {
     }
 
     public String getDadosProfessor(){
-        return "[ " + email.getEmail() + " - " + nome.getNomeCompleto() + " - " + dataNascimento.getDataCompleta() + " - " + país.getNomePaís() + " ]";
+        return "[ " + email.getEmail() + " - " + nome.getNome() + " " + sobrenome.getNome() + " - " + dataNascimento.getDataFormatada() + " - " + país.getNomePaís() + " ]";
     }
 
 
@@ -127,5 +126,6 @@ public class Professor {
         Postagem postagem = new Postagem("AEP 2020", "Equipe EFI", listaDisciplinaProfessor);
         postagensProfessor.add(postagem);
     }
+
 
 }

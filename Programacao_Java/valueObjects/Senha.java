@@ -27,7 +27,7 @@ public class Senha {
     }
 
     //UTILIZAR SAL GERADO
-    public String verificaSenha(String senhaLogin, String sal){
-        return sal;
+    public static String verificaSenha(String senhaLogin, String sal){
+        return senhaLogin;
     }
 }

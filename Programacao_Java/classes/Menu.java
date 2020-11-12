@@ -24,11 +24,12 @@ public class Menu {
                 case 1:
                     Login login = new Login();
                     login.setLogin();
-                    //conexao banco para procurar professor
+                    
                     break;
 
                 case 2:
-                    
+                    Cadastro novoCadastro = new Cadastro();
+                    // novoCadastro.setCadastro();
                     
                 break;
 

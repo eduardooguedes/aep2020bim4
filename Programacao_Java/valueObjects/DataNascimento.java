@@ -8,15 +8,20 @@ public class DataNascimento {
 
     private String dataFormatada;
     private LocalDate dataPadrao;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public DataNascimento(LocalDate date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        dataPadrao = date;
-        this.dataFormatada = date.format(formatter);
+    public DataNascimento(String data) {
+        String[] newData = data.split("/");
+        this.dataPadrao = LocalDate.of(Integer.parseInt(newData[2]), Integer.parseInt(newData[1]), Integer.parseInt(newData[0]));
+        this.dataFormatada = dataPadrao.format(formatter);
     }
 
-    public String getDataCompleta() {
+	public String getDataFormatada() {
         return dataFormatada;
+    }
+
+    public LocalDate getDataPadrao(){
+        return dataPadrao;
     }
 
     public int getDia() {
