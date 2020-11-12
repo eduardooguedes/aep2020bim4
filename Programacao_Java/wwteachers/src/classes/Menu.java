@@ -1,20 +1,23 @@
-package classes;
+package wwteachers.src.classes;
+
+import java.sql.SQLException;
 
 // import images.*;
 // import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import wwteachers.src.ConexaoPostgres.GerenciadorConexão;
+
 public class Menu {
 
-    String formatoMenu = "                                             WWTeachers\n                 "+
-    "LOGIN\n\n 1 - Acessar\n 2 - Criar conta\n 0 - Sair\n\nEscolha: ";
+    String formatoMenu = "                                             WWTeachers\n                 "
+            + "LOGIN\n\n 1 - Acessar\n 2 - Criar conta\n 0 - Sair\n\nEscolha: ";
     // ImageIcon iconOds = new ImageIcon("images.iconods4.ico");
 
-    public Menu(){
-        
+    public Menu() {
     }
 
-    public void mostrar(){
+    public void mostrar() throws SQLException {
         int opcao;
         do{
             String menu = (String) JOptionPane.showInputDialog(null, formatoMenu, "MENU", JOptionPane.QUESTION_MESSAGE);

@@ -1,11 +1,9 @@
-package classes;
+package wwteachers.src.classes;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-        import java.time.LocalDate;
+import java.time.LocalDate;
 import java.util.HashSet;
 
-import valueObjects.*;
+import wwteachers.src.valueObjects.*;
 
 public class Professor {
     private Código código;

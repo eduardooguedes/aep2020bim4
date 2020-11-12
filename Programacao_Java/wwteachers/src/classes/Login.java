@@ -1,4 +1,4 @@
-package classes;
+package wwteachers.src.classes;
 
 import java.beans.Statement;
 import java.sql.PreparedStatement;
@@ -10,8 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 // import javax.swing.JTextField;
 
-import ConexaoPostgres.GerenciadorConexão;
-import ConexaoPostgres.RepositórioProfessores;
+import wwteachers.src.ConexaoPostgres.*;
 
 public class Login {
 
@@ -45,10 +44,11 @@ public class Login {
             conexão = new GerenciadorConexão();
             RepositórioProfessores abrirRepositorio = new RepositórioProfessores(conexão.getConexão());
             Professor usuário = abrirRepositorio.buscarUsuário(email, senha);
-
+            
             if(usuário == null) {
                 System.out.println("Usuario não encontrado.");
             }
+
 
         } catch (Exception e) {
             e.printStackTrace();

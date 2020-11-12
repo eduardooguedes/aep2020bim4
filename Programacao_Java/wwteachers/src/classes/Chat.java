@@ -1,9 +1,9 @@
-package classes;
+package wwteachers.src.classes;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import valueObjects.*;
+import wwteachers.src.valueObjects.*;
 
 public class Chat {
 

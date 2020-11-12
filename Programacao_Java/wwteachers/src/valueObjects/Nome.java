@@ -1,4 +1,4 @@
-package valueObjects;
+package wwteachers.src.valueObjects;
 
 public class Nome {
     
@@ -9,7 +9,7 @@ public class Nome {
                 this.value = value;
             }
             else{
-                throw new RuntimeException();
+                this.value = null;
             }
     }
     

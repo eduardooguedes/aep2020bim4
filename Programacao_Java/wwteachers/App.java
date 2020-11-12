@@ -1,23 +1,13 @@
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
+package wwteachers;
 
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-import java.text.ParseException;
-
-import classes.*;
-import valueObjects.Nome;
+import wwteachers.src.classes.Menu;
 
 public class App {
 
-    public static void main(String[] args)
-    throws ParseException, UnsupportedEncodingException, NoSuchAlgorithmException {
-
-        Nome novo = new Nome("Eduardo");
-        System.out.println(novo.getNome());
-        Nome novo1 = new Nome("Iago");
-        System.out.println(novo1.getNome());
-
+    public static void main(String[] args) throws SQLException {
 
         JOptionPane.showMessageDialog(null, " Bem vindo ao WWTeachers\n\n A internet dos professores.", "                           WWTeachers", JOptionPane.INFORMATION_MESSAGE);
         Menu menu = new Menu();

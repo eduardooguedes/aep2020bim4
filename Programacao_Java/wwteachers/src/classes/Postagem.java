@@ -1,13 +1,8 @@
-package classes;
+package wwteachers.src.classes;
 
-import java.sql.Date;
-import java.text.DateFormat;
 import java.util.HashSet;
 
-import javax.print.attribute.standard.DateTimeAtCreation;
-import javax.swing.JOptionPane;
-
-import valueObjects.*;
+import wwteachers.src.valueObjects.*;
 
 public class Postagem {
 

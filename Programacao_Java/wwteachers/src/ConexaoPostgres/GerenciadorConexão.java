@@ -1,4 +1,4 @@
-package ConexaoPostgres;
+package wwteachers.src.ConexaoPostgres;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

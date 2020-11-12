@@ -1,10 +1,10 @@
-package classes;
+package wwteachers.src.classes;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import valueObjects.*;
+import wwteachers.src.valueObjects.Código;
 
 public class Grupo {
     

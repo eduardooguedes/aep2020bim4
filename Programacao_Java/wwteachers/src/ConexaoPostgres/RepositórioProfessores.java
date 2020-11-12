@@ -1,4 +1,4 @@
-package ConexaoPostgres;
+package wwteachers.src.ConexaoPostgres;
 
 import java.lang.Thread.State;
 import java.sql.Connection;
@@ -6,8 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import classes.Professor;
-import valueObjects.Senha;
+import javax.swing.JOptionPane;
+
+import wwteachers.src.classes.Professor;
+import wwteachers.src.valueObjects.Senha;
+
 
 public class RepositórioProfessores{
     private Connection conexão;
@@ -29,12 +32,11 @@ public class RepositórioProfessores{
              "disciplinaCod char(36) not null," +
              "email varchar(60) not null unique," +
              "senhaHash char(40) not null," +
-             "sal char(20) not null unique" +   
-             ")");        
+             "sal char(20) not null unique," +   
+             "constrain foreign key (disciplinaCod) references disciplina(codigo) )");        
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public void cadastrarProfessor(Professor novoProfessor){
@@ -61,19 +63,24 @@ public class RepositórioProfessores{
 
     public Professor buscarUsuário(String emailLogin, String senhaLogin){
         try (Statement select = conexão.createStatement();
-            ResultSet resultado = select.executeQuery("select codigo, nome, sobrenome, pais, codDisciplina, email, senhaHash, sal from professores where email = '" +  emailLogin + "'");) {
+            ResultSet resultado = select.executeQuery("select codigo, nome, sobrenome, pais, email, senhaHash, sal from professores where email = '" +  emailLogin + "'");) {
             
             if(resultado.next()){
                 String email = resultado.getString("email");
                 String senha = resultado.getString("senhaHash");
                 String sal = resultado.getString("sal");
 
-
                 if(email.equals(emailLogin)  && Senha.verificaSenha(senhaLogin, sal) == senha){
-                    // Professor professorLogin = new Professor() 
-                }
+                    JOptionPane.showMessageDialog(null, "Guedes na area");
+                    // Codigo codigo = resultado.getString("codigo");
+                    // String codigo = resultado.getString("codigo");
+                    // String codigo = resultado.getString("codigo");
+                    // String codigo = resultado.getString("codigo");
+                    // String codigo = resultado.getString("codigo");
 
-                //FINISH
+                    Professor professorLogin = null; //= new Professor();
+                    return professorLogin; 
+                }
             }
             else
             {

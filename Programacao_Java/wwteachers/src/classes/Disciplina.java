@@ -1,6 +1,6 @@
-package classes;
+package wwteachers.src.classes;
 
-import valueObjects.Código;
+import wwteachers.src.valueObjects.Código;
 
 public class Disciplina{
     

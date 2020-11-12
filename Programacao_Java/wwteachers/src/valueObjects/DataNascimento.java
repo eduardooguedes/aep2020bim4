@@ -1,4 +1,4 @@
-package valueObjects;
+package wwteachers.src.valueObjects;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -11,12 +11,23 @@ public class DataNascimento {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public DataNascimento(String data) {
-        String[] newData = data.split("/");
-        this.dataPadrao = LocalDate.of(Integer.parseInt(newData[2]), Integer.parseInt(newData[1]), Integer.parseInt(newData[0]));
-        this.dataFormatada = dataPadrao.format(formatter);
+        if(validarData(data)){
+            String[] newData = data.split("/");
+            this.dataPadrao = LocalDate.of(Integer.parseInt(newData[2]), Integer.parseInt(newData[1]), Integer.parseInt(newData[0]));
+            this.dataFormatada = dataPadrao.format(formatter);
+        }else{
+            this.dataPadrao = null;
+        }
+        
     }
 
-	public String getDataFormatada() {
+	private boolean validarData(String data) {
+        
+        
+        return true;
+    }
+
+    public String getDataFormatada() {
         return dataFormatada;
     }
 
