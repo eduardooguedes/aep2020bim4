@@ -1,25 +1,27 @@
 package br.wwteachers.valueObjects;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import static java.lang.Integer.parseInt;
+
+import java.sql.Date;
+// import java.time.format.DateTimeFormatter;
 
 public class DataNascimento {
 
-    private String dataFormatada;
-    private LocalDate dataPadrao;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private Date dataPadrao;
+    // private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public DataNascimento(String data) {
         if(validarData(data)){
             String[] newData = data.split("/");
-            this.dataPadrao = LocalDate.of(Integer.parseInt(newData[2]), Integer.parseInt(newData[1]), Integer.parseInt(newData[0]));
-            this.dataFormatada = dataPadrao.format(formatter);
+            this.dataPadrao = new Date(Integer.parseInt(newData[0]), Integer.parseInt(newData[1]), parseInt(newData[0]));
         }else{
             this.dataPadrao = null;
         }
-        
     }
+
+	public DataNascimento(Date date) {
+        this.dataPadrao = date;
+	}
 
 	private boolean validarData(String data) {
         
@@ -27,24 +29,20 @@ public class DataNascimento {
         return true;
     }
 
-    public String getDataFormatada() {
-        return dataFormatada;
-    }
-
-    public LocalDate getDataPadrao(){
+    public Date getDataPadrao(){
         return dataPadrao;
     }
 
     public int getDia() {
-        return dataPadrao.getDayOfMonth();
+        return dataPadrao.getDate();
     }
 
-    public DayOfWeek getDiaSemana() {
-        return dataPadrao.getDayOfWeek();
+    public int getDiaSemana() {
+        return dataPadrao.getDay();
     }
 
 	public int getMes() {
-		return dataPadrao.getMonthValue();
+		return dataPadrao.getMonth();
 	}
 
 	public int getYear() {

@@ -11,6 +11,7 @@ public class Senha {
 
     //GERAR HASH
     private String hash(String senha) {
+        this.sal = senha;
         return senha;
     }
 

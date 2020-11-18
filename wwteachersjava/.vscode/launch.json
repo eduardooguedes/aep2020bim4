@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Application_wwt",
+            "request": "launch",
+            "mainClass": "br.wwteachers.Application_wwt",
+            "projectName": "aep-project"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - App",
             "request": "launch",
             "mainClass": "br.wwteachers.App",

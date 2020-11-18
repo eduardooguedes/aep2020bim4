@@ -7,19 +7,21 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
-import br.wwteachers.conexãoBancoDados.GerenciadorConexão;
+import br.wwteachers.bancoDeDados.GerenciadorDeConexão;
+import br.wwteachers.comunidade.Disciplina;
 import br.wwteachers.professor.*;
 import br.wwteachers.valueObjects.*;
 
 public class Cadastro {
 
+    private Professor usuário;
     private JPasswordField senha1 = new JPasswordField();
     private JPasswordField senha2 = new JPasswordField();
 
     public Cadastro() throws SQLException {
-        GerenciadorConexão conexão;
+        GerenciadorDeConexão conexão;
         try {
-            conexão = new GerenciadorConexão();
+            conexão = new GerenciadorDeConexão();
             RepositórioProfessores repositorio = new RepositórioProfessores(conexão.getConexão());
             repositorio.cadastrarProfessor(setNovoCadastro());
         } catch (Exception e) {
@@ -27,7 +29,7 @@ public class Cadastro {
         }
     }
 
-    public Professor setNovoCadastro() {
+    private Professor setNovoCadastro() {
         Nome nomeCadastro;
         Nome sobrenomeCadastro;
         DataNascimento dataCadastro;
@@ -74,22 +76,26 @@ public class Cadastro {
 
         senha1.setEchoChar('*');
         senha2.setEchoChar('*');
-        
-        do{
-            int value = JOptionPane.showConfirmDialog(null, senha1, "Senha: ", JOptionPane.OK_CANCEL_OPTION);
-            if(value == JOptionPane.OK_OPTION){
-               JOptionPane.showConfirmDialog(null, senha2, "Confirme sua senha: ", JOptionPane.OK_CANCEL_OPTION);
-            }
+        int value=2;
+        // do{
+            // value = JOptionPane.showConfirmDialog(null, senha1, "Senha: ", JOptionPane.OK_CANCEL_OPTION);
+            // if(value == JOptionPane.OK_OPTION){
+            //    JOptionPane.showConfirmDialog(null, senha2, "Confirme sua senha: ", JOptionPane.OK_CANCEL_OPTION);
+            // }
 
-            if(!senha1.equals(senha2)) {
-                JOptionPane.showMessageDialog(null, "Senhas não coincidem");
-            }
-        }while(!senha1.equals(senha2));
-        senhaCadastro = new Senha(senha1.getText());
-
+            // if(senha1.getText() != senha2.getText()) {
+            //     JOptionPane.showMessageDialog(null, "Senhas não coincidem");
+            // }
+        // }while((senha1.getText() != senha2.getText()) || value == JOptionPane.CANCEL_OPTION);
+        // senhaCadastro = new Senha(senha1.getText());
+        senhaCadastro = new Senha("guedes");
         paísCadastro = País.BRA;
-        Professor professorCadastro = new Professor(nomeCadastro, sobrenomeCadastro, dataCadastro, paísCadastro, emailCadastro, senhaCadastro);
-        return professorCadastro;
+        this.usuário = new Professor(nomeCadastro, sobrenomeCadastro, dataCadastro, paísCadastro, emailCadastro, senhaCadastro);
+        return usuário;
+    }
+
+    public Professor getUsuário(){
+        return usuário;
     }
 
 }

@@ -1,6 +1,6 @@
 package br.wwteachers.professor;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.HashSet;
 
 import br.wwteachers.chat.Chat;
@@ -24,9 +24,9 @@ public class Professor {
 
     public Professor(Nome nomeProfessor, Nome sobrenomeProfessor, DataNascimento data, País paísProfessor,
             Email emailProfessor, Senha senhaProfessor) {
-        if(senhaProfessor != null)
-            this.código = setCódigo();
+        this.código = setCódigo();
         this.nome = nomeProfessor;
+        this.sobrenome = sobrenomeProfessor;
         this.dataNascimento = data;
         this.país = paísProfessor;
         this.email = emailProfessor;
@@ -35,7 +35,7 @@ public class Professor {
 
     public Professor(Código código, Nome nomeProfessor, Nome sobrenomeProfessor, DataNascimento data, País paísProfessor,
     Email emailProfessor, Senha senhaProfessor, Disciplina disciplina){
-        this(nomeProfessor, sobrenomeProfessor, data, paísProfessor, emailProfessor, null);
+        this(nomeProfessor, sobrenomeProfessor, data, paísProfessor, emailProfessor, senhaProfessor);
         this.código = código;
         this.disciplina = disciplina;
     }
@@ -56,12 +56,7 @@ public class Professor {
         return this.sobrenome.getNome();
     }
 
-    // EDITAR SET PARA PASSAR STRING E FORMATAR
-    public String getDataNascimento() {
-        return dataNascimento.getDataFormatada();
-    }
-
-    public LocalDate getDataPadrao() {
+    public Date getDataPadrao() {
         return dataNascimento.getDataPadrao();
     }
 

@@ -1,21 +1,23 @@
 package br.wwteachers.acesso;
 
 import java.sql.SQLException;
-
 import javax.swing.JOptionPane;
-
 import br.wwteachers.professor.Professor;
 
 public class MenuInicial {
     
     String formatoMenu = "                                             WWTeachers\n                 "
             + "LOGIN\n\n 1 - Acessar\n 2 - Criar conta\n 0 - Sair\n\nEscolha: ";
-    // ImageIcon iconOds = new ImageIcon("images.iconods4.ico");
 
     public MenuInicial() {
+        try {
+            mostrar();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void mostrar() throws SQLException {
+    private void mostrar() throws SQLException {
         int opcao;
         do{
             String menu = (String) JOptionPane.showInputDialog(null, formatoMenu, "MENU", JOptionPane.QUESTION_MESSAGE);
@@ -29,8 +31,8 @@ public class MenuInicial {
 
                 case 2:
                     Cadastro novoCadastro = new Cadastro();
-                    Professor usuário = novoCadastro.setNovoCadastro();
-                    System.out.println("Sucesso, " + usuário.getNome() + " cadastrado");
+                    Professor usuário = novoCadastro.getUsuário();
+                        
                 break;
 
                 case 3:
@@ -38,11 +40,11 @@ public class MenuInicial {
 
                 default: break;
 
-
                 }
 
         }while(opcao != 0);
 
+        
     }
 
 }
