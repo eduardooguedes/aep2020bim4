@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
@@ -509,6 +508,8 @@ int main(){
 	TP usuarioLogado, aux;
 	usuarioLogado = aux;
 	
+	bool logado = false;
+	
 	TP pessoa;
 	int opcao;
 	int id = 1;
@@ -577,6 +578,13 @@ int main(){
 				break;
 			}
 			case 5:{
+				if(strcmp(usuarioLogado.tipoUsuario, "Visitante") == 0 || strcmp(usuarioLogado.tipoUsuario, "Professor") == 0 || (!logado)){
+						printf("\n Você não tem permissão ou não está logado.");
+						printf("\n Pressione qualquer tecla para voltar ao menu inicial.");
+						getch();
+						system("cls");
+						break;
+					}
 				char nomeBusca[30];
 				int usuarioEncontrado;
 				printf("\n Informe o email do usuário a ser consultado: ");
@@ -594,9 +602,9 @@ int main(){
 			}
 			case 6:
 				{
-					if(strcmp(usuarioLogado.tipoUsuario, "Visitante") == 0 || strcmp(usuarioLogado.tipoUsuario, "Professor") == 0){
-						printf("\n Você não tem permissão para excluir nenhum usuário");
-						printf("\n Pressione qualquer tecla para voltar ao menu inicial");
+					if(strcmp(usuarioLogado.tipoUsuario, "Visitante") == 0 || strcmp(usuarioLogado.tipoUsuario, "Professor") == 0 || (!logado)){
+						printf("\n Você não tem permissão ou não está logado.");
+						printf("\n Pressione qualquer tecla para voltar ao menu inicial.");
 						getch();
 						system("cls");
 						break;
@@ -620,6 +628,7 @@ int main(){
 					gets(loginUsuario);
 					raiz = consultarLoginRecursivo(raiz, loginUsuario);
 					if(raiz != NULL){
+						logado = true;
 						logar(raiz);
 						usuarioLogado = raiz->pessoa;
 					}else
@@ -630,6 +639,7 @@ int main(){
 				}
 				case 8: {
 					usuarioLogado = aux;
+					logado = false;
 					break;
 				}
 			case 9: system("cls"); break;
