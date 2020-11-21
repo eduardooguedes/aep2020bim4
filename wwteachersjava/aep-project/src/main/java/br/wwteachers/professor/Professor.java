@@ -1,6 +1,6 @@
 package br.wwteachers.professor;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.HashSet;
 
 import br.wwteachers.chat.Chat;
@@ -20,13 +20,13 @@ public class Professor {
 
     HashSet<Disciplina> listaDisciplinaProfessor = new HashSet<Disciplina>();
     HashSet<Chat> chatProfessor = new HashSet<Chat>();
-    HashSet<Postagem> postagensProfessor = new HashSet<Postagem>();
+    HashSet<    Postagem> postagensProfessor = new HashSet<Postagem>();
 
     public Professor(Nome nomeProfessor, Nome sobrenomeProfessor, DataNascimento data, País paísProfessor,
             Email emailProfessor, Senha senhaProfessor) {
-        if(senhaProfessor != null)
-            this.código = setCódigo();
+        this.código = setCódigo();
         this.nome = nomeProfessor;
+        this.sobrenome = sobrenomeProfessor;
         this.dataNascimento = data;
         this.país = paísProfessor;
         this.email = emailProfessor;
@@ -34,10 +34,15 @@ public class Professor {
     }
 
     public Professor(Código código, Nome nomeProfessor, Nome sobrenomeProfessor, DataNascimento data, País paísProfessor,
-    Email emailProfessor, Senha senhaProfessor, Disciplina disciplina){
-        this(nomeProfessor, sobrenomeProfessor, data, paísProfessor, emailProfessor, null);
+    Email emailProfessor){
         this.código = código;
-        this.disciplina = disciplina;
+        this.nome = nomeProfessor;
+        this.sobrenome = sobrenomeProfessor;
+        this.dataNascimento = data;
+        this.país = paísProfessor;
+        this.email = emailProfessor;
+        this.senha = null;
+        this.disciplina = null;
     }
 
     public String getCódigo() {
@@ -56,12 +61,7 @@ public class Professor {
         return this.sobrenome.getNome();
     }
 
-    // EDITAR SET PARA PASSAR STRING E FORMATAR
-    public String getDataNascimento() {
-        return dataNascimento.getDataFormatada();
-    }
-
-    public LocalDate getDataPadrao() {
+    public Date getDataPadrao() {
         return dataNascimento.getDataPadrao();
     }
 
@@ -82,8 +82,8 @@ public class Professor {
     }
 
     // IMPLEMENTAR SENHA HASH
-    public Senha getSenha() {
-        return this.senha;
+    public String getSenha() {
+        return this.senha.getSenha();
     }
 
     public String getCódigoDisciplinaPrincipal() {

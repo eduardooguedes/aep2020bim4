@@ -1,18 +1,13 @@
-package br.wwteachers.conexãoBancoDados;
+package br.wwteachers.bancoDeDados;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.lang.Exception;
-import java.lang.AutoCloseable;
 
-public class GerenciadorConexão implements AutoCloseable {
+public class GerenciadorDeConexão implements AutoCloseable {
     private Connection conexão = null;
-    
-    public GerenciadorConexão() throws ClassNotFoundException, SQLException {
-        
-        Class.forName("org.postgresql.Driver");
 
+    public GerenciadorDeConexão() throws SQLException {
         conexão = DriverManager.getConnection(
             "jdbc:postgresql://localhost:5432/wwteachers", "postgres", "postgres");
             conexão.setAutoCommit(false);
@@ -23,7 +18,10 @@ public class GerenciadorConexão implements AutoCloseable {
     }
 
     public void close() throws Exception {
-        conexão.close();
+        System.out.println("GerenciadorDeConexão fechando! :)");
+        if (conexão != null) {
+            conexão.close();
+        }
     }
 
 }

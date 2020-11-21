@@ -1,25 +1,23 @@
 package br.wwteachers.acesso;
 
 import java.sql.SQLException;
-// import java.util.Arrays;
-// import java.util.List;
-
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
-import br.wwteachers.conexãoBancoDados.GerenciadorConexão;
+import br.wwteachers.bancoDeDados.GerenciadorDeConexão;
 import br.wwteachers.professor.*;
 import br.wwteachers.valueObjects.*;
 
 public class Cadastro {
 
+    private Professor usuário;
     private JPasswordField senha1 = new JPasswordField();
     private JPasswordField senha2 = new JPasswordField();
 
     public Cadastro() throws SQLException {
-        GerenciadorConexão conexão;
+        GerenciadorDeConexão conexão;
         try {
-            conexão = new GerenciadorConexão();
+            conexão = new GerenciadorDeConexão();
             RepositórioProfessores repositorio = new RepositórioProfessores(conexão.getConexão());
             repositorio.cadastrarProfessor(setNovoCadastro());
         } catch (Exception e) {
@@ -27,7 +25,7 @@ public class Cadastro {
         }
     }
 
-    public Professor setNovoCadastro() {
+    private Professor setNovoCadastro() {
         Nome nomeCadastro;
         Nome sobrenomeCadastro;
         DataNascimento dataCadastro;
@@ -52,44 +50,46 @@ public class Cadastro {
         } while (dataCadastro.getDataPadrao() == null);
 
 
-        // do{
-        //     List<País> listaPaises = Arrays.asList(País.values());
-        //     String paísDigitado = JOptionPane.showInputDialog(null, "Informe seu país: ");
-        //     for(País pais : listaPaises){
-        //         if(pais.getNomePaís() == paísDigitado){
-        //             paísCadastro = pais;
-        //             break;
-        //         }
-        //         else{
-        //             paísCadastro = null;
-        //         }
-        //     }
+        do{
+            País[] listaPaises = País.values();
+            String paísDigitado = JOptionPane.showInputDialog(null, "Informe seu país: ");
+            paísCadastro=null;
 
-        // }while(paísCadastro == null);
+            for(País pais : listaPaises){                
+                if(pais.getNomePaís().equals(paísDigitado)){
+                    paísCadastro = pais;
+                    break;
+                }
+                else{
+                    paísCadastro = null;
+                }
+            }
+        }while(paísCadastro == null);
 
         do {
             String email = JOptionPane.showInputDialog(null, "Email: ");
-            emailCadastro = new Email(email);
-        } while (emailCadastro.getEmail() == null);
+                emailCadastro = new Email(email);
+        } while (!emailCadastro.getBoolean());
 
         senha1.setEchoChar('*');
         senha2.setEchoChar('*');
-        
+        int value=2;
         do{
-            int value = JOptionPane.showConfirmDialog(null, senha1, "Senha: ", JOptionPane.OK_CANCEL_OPTION);
+            value = JOptionPane.showConfirmDialog(null, senha1, "Senha: ", JOptionPane.OK_CANCEL_OPTION);
             if(value == JOptionPane.OK_OPTION){
                JOptionPane.showConfirmDialog(null, senha2, "Confirme sua senha: ", JOptionPane.OK_CANCEL_OPTION);
             }
 
-            if(!senha1.equals(senha2)) {
+            if(senha1.getText() != senha2.getText()) {
                 JOptionPane.showMessageDialog(null, "Senhas não coincidem");
             }
-        }while(!senha1.equals(senha2));
-        senhaCadastro = new Senha(senha1.getText());
 
-        paísCadastro = País.BRA;
-        Professor professorCadastro = new Professor(nomeCadastro, sobrenomeCadastro, dataCadastro, paísCadastro, emailCadastro, senhaCadastro);
-        return professorCadastro;
+        }while((senha1.getText() != senha2.getText()) || value != JOptionPane.CANCEL_OPTION);
+
+        senhaCadastro = new Senha(senha1.getText()); 
+
+        this.usuário = new Professor(nomeCadastro, sobrenomeCadastro, dataCadastro, paísCadastro, emailCadastro, senhaCadastro);
+        return usuário;
     }
 
 }
