@@ -33,6 +33,9 @@ public class Cadastro {
         Senha senhaCadastro;
         Email emailCadastro;
 
+        senha1.setEchoChar('*');
+        senha2.setEchoChar('*');
+
         do {
             String nome = JOptionPane.showInputDialog(null, "Informe seu nome: ");
             String sobrenome = JOptionPane.showInputDialog(null, "Sobrenome: ");
@@ -48,7 +51,6 @@ public class Cadastro {
             String data = JOptionPane.showInputDialog(null, "Data nascimento (dd/mm/yyyy): ");
             dataCadastro = new DataNascimento(data);
         } while (dataCadastro.getDataPadrao() == null);
-
 
         do{
             País[] listaPaises = País.values();
@@ -71,19 +73,15 @@ public class Cadastro {
                 emailCadastro = new Email(email);
         } while (!emailCadastro.getBoolean());
 
-        senha1.setEchoChar('*');
-        senha2.setEchoChar('*');
         int value=2;
         do{
             value = JOptionPane.showConfirmDialog(null, senha1, "Senha: ", JOptionPane.OK_CANCEL_OPTION);
             if(value == JOptionPane.OK_OPTION){
                JOptionPane.showConfirmDialog(null, senha2, "Confirme sua senha: ", JOptionPane.OK_CANCEL_OPTION);
             }
-
             if(senha1.getText() != senha2.getText()) {
                 JOptionPane.showMessageDialog(null, "Senhas não coincidem");
             }
-
         }while((senha1.getText() != senha2.getText()) || value != JOptionPane.CANCEL_OPTION);
 
         senhaCadastro = new Senha(senha1.getText()); 
