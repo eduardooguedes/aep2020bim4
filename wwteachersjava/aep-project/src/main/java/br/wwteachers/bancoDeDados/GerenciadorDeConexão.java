@@ -7,7 +7,6 @@ import java.sql.SQLException;
 public class GerenciadorDeConexão implements AutoCloseable {
     private Connection conexão = null;
 
-
     public GerenciadorDeConexão() throws SQLException {
         conexão = DriverManager.getConnection(
             "jdbc:postgresql://localhost:5432/wwteachers", "postgres", "postgres");

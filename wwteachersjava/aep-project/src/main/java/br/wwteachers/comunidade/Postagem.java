@@ -1,5 +1,7 @@
 package br.wwteachers.comunidade;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 
 import br.wwteachers.valueObjects.Código;
@@ -67,8 +69,8 @@ public class Postagem {
         return new MomentoDataHora();
     }
 
-    public String getDataHoraAtual() {
-        return momentoDataHora.getMomento();
+    public LocalDateTime getDataHoraAtual() {
+        return momentoDataHora.getMomentoPadrao();
     }
 
 }

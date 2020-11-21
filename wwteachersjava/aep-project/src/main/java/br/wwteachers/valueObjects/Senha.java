@@ -2,29 +2,13 @@ package br.wwteachers.valueObjects;
 
 public class Senha {
     
-    private String senhaHash;
-    private String sal;
+    private String senha;
 
     public Senha(String senha) {
-        this.senhaHash = hash(senha);
+        this.senha = senha;
     }
 
-    //GERAR HASH
-    private String hash(String senha) {
-        this.sal = senha;
-        return senha;
-    }
-
-    public String getSenhaHash(){
-        return this.senhaHash;
-    }
-
-    public String getSal() {
-        return sal;
-    }
-
-    //UTILIZAR SAL GERADO
-    public static String verificaSenha(String senhaLogin, String sal){
-        return senhaLogin;
+    public String getSenha(){
+        return this.senha;
     }
 }

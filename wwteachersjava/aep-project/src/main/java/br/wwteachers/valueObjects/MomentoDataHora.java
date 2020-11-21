@@ -10,19 +10,23 @@ public class MomentoDataHora {
 
     private String dataHoraFormatada;
     private LocalDateTime dataHoraPadrão;
-
+    
+	public MomentoDataHora() {
+        this.dataHoraPadrão = LocalDateTime.now();
+        System.out.println(dataHoraPadrão.toString());
+    }
+    
     public MomentoDataHora(LocalDateTime dateTimeAtual) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         this.dataHoraFormatada = dateTimeAtual.format(formatter);
         this.dataHoraPadrão = dateTimeAtual;
-        // JOptionPane.showMessageDialog(null, "Data/hora formatada ["+
-        // dateTimeFormatado + "]");
+    }
+    
+    public LocalDateTime getMomentoPadrao(){
+        return this.dataHoraPadrão;
     }
 
-    public MomentoDataHora() {
-	}
-
-	public String getMomento() {
+    public String getMomentoFormatado() {
         return this.dataHoraFormatada;
     }
 
@@ -38,7 +42,7 @@ public class MomentoDataHora {
         return this.dataHoraPadrão.getDayOfMonth();
     }
 
-    public int getMesValor(){
+    public int getMêsValor(){
         return this.dataHoraPadrão.getMonthValue();
     }
 

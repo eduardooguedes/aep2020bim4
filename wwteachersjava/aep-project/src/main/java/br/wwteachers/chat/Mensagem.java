@@ -3,39 +3,31 @@ package br.wwteachers.chat;
 import java.time.LocalDateTime;
 
 import br.wwteachers.professor.Professor;
+import br.wwteachers.valueObjects.MomentoDataHora;
 
 public class Mensagem {
     
     private Professor professor;
     private String mensagem;
-    private LocalDateTime horaMensagem;
-    private Foto foto;
+    private MomentoDataHora momentoMensagem;
 
     public Mensagem(Professor professor, String mensagem){
         this.professor = professor;
         this.mensagem = mensagem;
-        this.horaMensagem = LocalDateTime.now();
+        this.momentoMensagem = new MomentoDataHora();
     }
 
-    public Mensagem(Professor professor, String mensagem, Foto foto){
-        this(professor, mensagem);
-        this.foto = foto;
-    }
-    
     public Professor getProfessor(){
         return this.professor;
     }
 
     public String getMensagem(){
         return this.mensagem;
-    }
+    }   
 
-    public LocalDateTime getDateTime(){
-        return this.horaMensagem;
+    public LocalDateTime getMomento(){
+        return this.momentoMensagem.getMomentoPadrao();
     }
-
-    public Foto getFoto(){
-        return this.foto;
-    }
+    
 }
 

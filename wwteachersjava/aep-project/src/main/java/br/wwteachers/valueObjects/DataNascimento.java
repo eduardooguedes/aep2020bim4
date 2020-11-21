@@ -41,11 +41,11 @@ public class DataNascimento {
         return dataPadrao.getDay();
     }
 
-	public int getMes() {
+	public int getMês() {
 		return dataPadrao.getMonth();
 	}
 
-	public int getYear() {
+	public int getAno() {
 		return dataPadrao.getYear();
 	}
 }

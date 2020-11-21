@@ -25,7 +25,11 @@ public class Chat {
     private Código setCódigo(){
         return new Código("Chat");
     }
-
+    
+    public String getTipo() {
+        return tipo;
+    }
+    
     public void adicionarMensagem(Professor professor, String texto) {
         Mensagem mensagem = new Mensagem(professor, texto);
         mensagensChat.add(mensagem);
@@ -35,9 +39,6 @@ public class Chat {
         return mensagensChat;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
 
     
 }

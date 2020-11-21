@@ -7,14 +7,17 @@ import br.wwteachers.bancoDeDados.GerenciadorDeConexão;
 import br.wwteachers.professor.Professor;
 import br.wwteachers.professor.RepositórioProfessores;
 
-
 public class Login {
 
     private Professor usuário;
     private JPasswordField senhaInserida = new JPasswordField();
 
+    public Login(){
+       setLogin();
+    }
+
     public void setLogin() {
-        senhaInserida.setEchoChar('*');
+        senhaInserida.setEchoChar('Ø');
 
         String email = JOptionPane.showInputDialog(null, "Email: ");
         int value = JOptionPane.showConfirmDialog(null, senhaInserida, "Senha: ", JOptionPane.OK_CANCEL_OPTION);
@@ -26,8 +29,9 @@ public class Login {
         } else {
             JOptionPane.showMessageDialog(null, "Operação cancelada pelo usuário.");
         }
-
-        System.out.println(this.usuário.getSobrenome()); 
+        if(usuário != null){
+            System.out.println(this.usuário.getEmail() + ", " + this.usuário.getSobrenome() + ", " + this.usuário.getNomePaís() + ", " + this.usuário.getDataPadrao());
+        }
     }
 
     private void efetuarLogin(String email, String senha) {

@@ -81,9 +81,9 @@ public class Grupo{
         this.chat = new Chat("Grupo");
     }  
 
-    // public void criarPostagemGrupo(){
-        //     Postagem postagem = new Postagem(7, "Leões", "Esse grupo só tem fera");//EXEMPLO
-        //     postagensGrupo.add(postagem);
-    // }
+    public void criarPostagemGrupo(String título, String conteúdo){
+            Postagem postagem = new Postagem(título, conteúdo);
+            postagensGrupo.add(postagem);
+    }
 
 }
