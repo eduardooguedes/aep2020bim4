@@ -1,7 +1,6 @@
 package br.wwteachers.acesso;
 
 import java.sql.SQLException;
-
 import javax.swing.JOptionPane;
 
 public class MenuInicial {
@@ -19,36 +18,27 @@ public class MenuInicial {
 
     private void apresentar() throws SQLException {
         try{
-
             int opcao;
             do{
                 String menu = (String) JOptionPane.showInputDialog(null, formatoMenu, "MENU", JOptionPane.QUESTION_MESSAGE);
                 opcao = Integer.parseInt(menu);
-                
                 switch(opcao){
                     case 1:
-                    Login login = new Login();
-                    break;
-                    
+                        Login login = new Login();
+                        break;
                     case 2:
-                    Cadastro novoCadastro = new Cadastro();
-                    Login login2 = new Login();
-                    break;
-                    
+                        Cadastro novoCadastro = new Cadastro();
+                        break;
                     case 3:
-                    break;
-                    
-                    default: break;
+                        break;
+                    default: 
+                        break;
                 }
-                
             }while(opcao != 0);
-        
         } catch (NumberFormatException e){
             System.out.println("Até logo.");
-        
         } catch (Exception ex){
             ex.printStackTrace();
         }              
     }
-
 }

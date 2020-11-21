@@ -1,6 +1,5 @@
 package br.wwteachers.comunidade;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 
